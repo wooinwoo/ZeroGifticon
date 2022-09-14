@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./pageStyles/GiftBoxDetail.module.css";
 import { useParams } from "react-router-dom";
 import { getData, TEMP_URL } from "../api";
+import Barcode from "react-barcode/lib/react-barcode";
 
 function GiftBoxDetail() {
   const { giftId } = useParams();
@@ -24,7 +25,9 @@ function GiftBoxDetail() {
     <div className={styles.detail}>
       <img className={styles.itemImg} src={item.img} alt={item.title}></img>
       <div className={styles.title}>{item.title}</div>
-      <div className={styles.barcode}>바코드</div>
+      <Barcode value="example" className={styles.barcode}>
+        바코드
+      </Barcode>
       <div className={styles.use}>사용기한</div>
       <button className={styles.button}>감사 메세지 보내기</button>
     </div>

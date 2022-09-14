@@ -1,0 +1,27 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 100px 0;
+  font-size: 60px;
+}
+
+.p {
+  font-size: 30px;
+  margin: 15px;
+}
+
+.button {
+  width: 250px;
+  height: 50px;
+  margin-top: 150px;
+  background-color: #e2e2e2;
+  font-size: 20px;
+}
+
+.button:hover {
+  background-color: yellow;
+}

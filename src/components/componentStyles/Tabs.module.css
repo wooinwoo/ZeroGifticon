@@ -1,0 +1,24 @@
+.tabList {
+  display: flex;
+}
+
+.tab{
+  flex:1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+}
+
+.btn{
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+.selected {
+  border-bottom: #d6B534 3px solid;
+  font-weight: 800;
+}

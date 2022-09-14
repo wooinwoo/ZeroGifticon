@@ -1,0 +1,12 @@
+.body{
+  margin: calc(10px + 0.5vw) 0;
+}
+
+.iconArea{
+  display: flex;
+}
+.iconArea span{
+  width: calc(40px + 2vw);
+  padding: 5px 0 0 8px;
+  /* margin: 0 calc(20px + 2vw) 0 8px; */
+}

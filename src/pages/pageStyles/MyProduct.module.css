@@ -1,0 +1,66 @@
+.tableContainer{
+  position: relative;
+  width: 100vw; 
+  max-width: calc(700px + 30vw);
+  margin: 90px auto 0;
+}
+.editBtn{
+  position: absolute;
+  top: -70px;
+  right: 0px;
+  padding: 15px;
+  height: 50px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: #d6B534;
+  border-radius: 10px;
+}
+.delBtn{
+  position: absolute;
+  top: -70px;
+  right: 100px;
+  height: 50px;
+  color: #ff0000;
+  font-weight: 700;
+  padding: 10px;
+  border: 1px solid #ff0000;
+  border-radius: 10px;
+}
+
+.head{
+  height: 50px;
+  font-weight: 700;
+  line-height: 50px;
+  background-color: #d3d3d3;
+  text-align: start;
+  padding-left: 10px;
+  white-space:nowrap;
+}
+.head:nth-child(1){ width:10vw }
+.head:nth-child(2){ width:10vw}
+.head:nth-child(3){ width:35vw}
+.head:nth-child(4){ width:15vw }
+.head:nth-child(5){ width:15vw }
+.head:nth-child(6){ width:15vw }
+
+tbody td{
+  height: 5vh;
+  border-bottom:1px solid #d3d3d3;
+  /* text-align: center; */
+  vertical-align: middle;
+  white-space:nowrap;
+  font-size: 1em;
+  padding-left: 10px;
+}
+
+.nameContainer{
+  display: flex;
+  align-items: center;
+}
+
+.productImg{
+  width: 50px;
+  height: 50px;
+  margin: 10px 10px 10px 0;
+}

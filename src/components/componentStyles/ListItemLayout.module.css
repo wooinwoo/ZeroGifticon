@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  background-color: #ffffff;
+  padding: 8px 16px;
+  margin-bottom: 30px;
+}
+
+.img{
+  width: calc(60px + 10vw);
+  height: calc(100px + 2vw);
+}
+
+.info{
+  padding: calc(10px + 1vw);
+}
+
+.title{
+  font-size: 18px;
+  font-weight: 700;
+}

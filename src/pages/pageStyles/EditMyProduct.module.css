@@ -1,0 +1,55 @@
+.Container{
+  width: max(50vw,320px);
+  height: 100%;
+  margin: 10px auto;
+}
+.editArea{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: max(35vw,300px);
+  height: calc(100vh - 132px);
+  padding: 0 10px;
+}
+
+.selecArea .name{
+  margin-right: 20px;
+}
+.selecArea input{
+  width: 120px;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sInput{
+  box-sizing: border-box;
+  width: max(40vw,300px);
+  max-width: 700px;
+}
+
+
+select {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #444;
+  background-color: #fff;
+  margin: 0;
+  border: 1px solid #aaa;
+  border-radius: 0.5em;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+}
+
+
+.saveBtn{
+  display: block;
+  width: max(50vw,300px);
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #d6B534;
+  border-radius: 10px;
+}

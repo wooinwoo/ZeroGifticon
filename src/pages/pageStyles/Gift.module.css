@@ -1,0 +1,95 @@
+.Container{
+  width: max(50vw,320px);
+  height: 100%;
+  margin: 10px auto;
+}
+.editArea{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: max(35vw,300px);
+  height: 82vh;
+  padding: 0 10px;
+  margin: 20px auto;
+}
+.mainName{
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.titleArea{
+  display: flex;
+}
+.img{
+  width: 15vh;
+  height: 15vh;
+}
+.titleArea div{
+  padding: 10px 20px 20px;
+}
+.title{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.body{
+  font-size: 18px;
+  font-weight: 700;
+  color:#696969
+}
+
+.infoArea{
+  display: flex;
+  justify-content: space-between;
+}
+.name{
+  font-size: 18px;
+  font-weight: 500;
+}
+.price{
+  font-size: 20px;
+  font-weight: 700;
+}
+.point{
+  font-size: 18px;
+  font-weight: 600;
+  color:#696969
+}
+
+.pInput{
+  width: 60%;
+  height: 5vh;
+  
+}
+.pointBtn{
+  width: 30%;
+  height: 5vh;
+  background-color: rgba(128,128,128,0.7);
+  border-radius: 5px;
+}
+
+.userName{
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  color: #696969;
+  background-color:rgba(128,128,128,0.7);
+  text-align : center;
+  padding : 10px 0;
+  border-radius: 4px;
+}
+
+.sInput{
+  height: 14vh;
+  border: 2px solid #808080;
+  border-radius: 8px;
+}
+
+.saveBtn{
+  display: block;
+  height: 7vh;
+  line-height: 7vh;
+  text-align: center;
+  background-color: #d6B534;
+  border-radius: 10px;
+}

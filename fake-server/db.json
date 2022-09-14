@@ -99,7 +99,8 @@
       "description": "설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명",
       "views": 1,
       "heart": 2
-    },    {
+    },
+    {
       "id": 11,
       "img": 1,
       "title": "한우 세트2",
@@ -203,18 +204,6 @@
   "product": [
     {
       "img": "",
-
-      "title": "123",
-      "category": "없음",
-      "price": 0,
-      "volume": 0,
-      "registrationDate": "2022-9-13",
-      "description": "",
-
-      "id": 3
-    },
-    {
-      "img": "",
       "title": "456",
       "category": "없음",
       "price": 0,
@@ -222,6 +211,16 @@
       "registrationDate": "2022-9-13",
       "description": "",
       "id": 4
+    },
+    {
+      "img": "",
+      "title": "123",
+      "category": "없음",
+      "price": 0,
+      "volume": 0,
+      "registrationDate": "2022-9-14",
+      "description": "",
+      "id": 5
     }
   ]
 }

@@ -6,6 +6,7 @@ import viewIcon from "../images/view.svg";
 import heartIcon from "../images/heart.svg";
 function ShopDetail() {
   const data = useLocation().state.data;
+  console.log(data);
   return (
     <div className={styles.container}>
       <img src={data.img} className={styles.mainImg} alt="" />
@@ -23,7 +24,7 @@ function ShopDetail() {
 
       <div className={styles.btnArea}>
         <button className={cx(styles.heartBtn, styles.btn)}>♡ 좋아요</button>
-        <Link to="/shop/shop-detail/gift">
+        <Link to="/shop/gift" state={data}>
           <button className={cx(styles.giftBtn, styles.btn)}>선물하기</button>
         </Link>
       </div>

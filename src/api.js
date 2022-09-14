@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const REVIEW_URL = "http://localhost:5000/review";
+export const PRODUCT_URL = "http://localhost:5000/product";
 export const TEMP_URL = "http://localhost:5000/memo";
 export const BASE_URL = "https://zerogift.p-e.kr";
 
@@ -11,21 +13,25 @@ export async function getData(url) {
   return response.data;
 }
 
-export async function createData(url, formData) {
+export async function createData(url, data) {
+  console.log(url);
+  console.log(data);
   const response = await axios({
     method: "POST",
     url: url,
-    body: formData,
+    data: data,
   });
+
+  console.log(response);
 
   return response.data;
 }
 
-export async function updateData(url, formData) {
+export async function updateData(url, data) {
   const response = await axios({
     method: "PUT",
     url: url,
-    body: formData,
+    data: data,
   });
 
   return response.data;

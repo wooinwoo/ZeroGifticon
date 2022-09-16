@@ -1,6 +1,5 @@
 import axios from "axios";
 
-export const TEMP_URL = "http://localhost:5000/memo";
 export const BASE_URL = "https://zerogift.p-e.kr";
 
 export async function getData(url) {
@@ -11,21 +10,32 @@ export async function getData(url) {
   return response.data;
 }
 
-export async function createData(url, formData) {
+export async function getMember(url, token) {
+  const response = await axios({
+    method: "GET",
+    url: url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function createData(url, data) {
   const response = await axios({
     method: "POST",
     url: url,
-    body: formData,
+    data: data,
   });
 
   return response.data;
 }
 
-export async function updateData(url, formData) {
+export async function updateData(url, data) {
   const response = await axios({
     method: "PUT",
     url: url,
-    body: formData,
+    data: data,
   });
 
   return response.data;

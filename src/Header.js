@@ -12,6 +12,9 @@ export default function Header() {
     : pathname[pathname.length - 2];
 
   const pageOption = {
+    "": [],
+    login: [],
+    oauth: [],
     shop: ["tab", "bell"],
     "shop-detail": ["bell", "back"],
     gift: ["bell", "back"],
@@ -25,11 +28,13 @@ export default function Header() {
   };
   return (
     <>
-      <div className={styles.header}>
-        선물하기
-        {pageOption[path].includes("bell") ? <Bell /> : ""}
-        {pageOption[path].includes("back") ? <BackButton /> : ""}
-      </div>
+      {pageOption[path].length !== 0 && (
+        <div className={styles.header}>
+          선물하기
+          {pageOption[path].includes("bell") ? <Bell /> : ""}
+          {pageOption[path].includes("back") ? <BackButton /> : ""}
+        </div>
+      )}
       {pageOption[path].includes("tab") ? <Tabs /> : ""}
       <Outlet />
     </>

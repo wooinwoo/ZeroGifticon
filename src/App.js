@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./Header";
 
-import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Shop from "./pages/Shop";
 import ShopDetail from "./pages/ShopDetail";
@@ -14,38 +13,44 @@ import Review from "./pages/Review";
 import MyProduct from "./pages/MyProduct";
 import EditMyProduct from "./pages/EditMyProduct";
 import KakaoLogin from "./pages/KakaoLogin";
-import NotFoundPage from "./pages/NotFoundPage"
+import NotFoundPage from "./pages/NotFoundPage";
+import { CookiesProvider } from "react-cookie";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login">
-          <Route index element={<Login />} />
-          <Route path="oauth" element={<KakaoLogin />} />
-        </Route>
-        <Route path="/" element={<Header />}>
-          <Route index element={<Main />} />
-          <Route path="shop">
-            <Route index element={<Shop />} />
-            <Route path="shop-detail" element={<ShopDetail />} />
-            <Route path="gift" element={<Gift />} />
+    <CookiesProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Header />}>
+            <Route index element={<Login />} />
+            <Route path="login">
+              <Route index element={<Login />} />
+              <Route path="oauth" element={<KakaoLogin />} />
+            </Route>
+            <Route path="shop">
+              <Route index element={<Shop />} />
+              <Route path="shop-detail" element={<ShopDetail />} />
+              <Route path="gift" element={<Gift />} />
+            </Route>
+            <Route path="gift-box">
+              <Route index element={<GiftBox />} />
+              <Route
+                path="gift-box-detail/:giftId"
+                element={<GiftBoxDetail />}
+              />
+            </Route>
+            <Route path="my-product">
+              <Route index element={<MyProduct />} />
+              <Route path="edit-product" element={<EditMyProduct />} />
+            </Route>
+            <Route path="review" element={<Review />} />
+            <Route path="thank" element={<ThankYou />} />
+            <Route path="notification" element={<Notification />} />
           </Route>
-          <Route path="gift-box">
-            <Route index element={<GiftBox />} />
-            <Route path="gift-box-detail/:giftId" element={<GiftBoxDetail />} />
-          </Route>
-          <Route path="my-product">
-            <Route index element={<MyProduct />} />
-            <Route path="edit-product" element={<EditMyProduct />} />
-          </Route>
-          <Route path="review" element={<Review />} />
-          <Route path="thank" element={<ThankYou />} />
-          <Route path="notification" element={<Notification />} />
           <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </CookiesProvider>
   );
 }
 export default App;

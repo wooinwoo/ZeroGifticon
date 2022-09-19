@@ -1,5 +1,9 @@
 .tabList {
+  position: sticky;
+  top: 8vh;
   display: flex;
+  background-color: aliceblue;
+  z-index:9999;
 }
 
 .tab{
@@ -7,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  height: min(5vh,50px);
   border-top: 1px solid #808080;
   border-bottom: 1px solid #808080;
 }

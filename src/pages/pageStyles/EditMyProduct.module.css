@@ -24,13 +24,6 @@
   font-weight: 700;
 }
 
-.sInput{
-  box-sizing: border-box;
-  width: max(40vw,300px);
-  max-width: 700px;
-}
-
-
 select {
   font-size: 1rem;
   font-weight: 400;
@@ -43,7 +36,6 @@ select {
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
 }
 
-
 .saveBtn{
   display: block;
   width: max(50vw,300px);
@@ -52,4 +44,30 @@ select {
   text-align: center;
   background-color: #d6B534;
   border-radius: 10px;
+}
+
+
+.input{
+  box-sizing: border-box;
+  width: max(40vw,300px);
+  max-width: 700px;
+  padding: 0px;
+  border: 0.5px solid;
+  border-radius: 10px;
+}
+
+
+.titleInput{
+  height: 10vh;
+}
+
+.priceInput{
+  height: 5vh;
+}
+.volumeInput{
+  height: 5vh;
+}
+
+.descriptionInput{
+  height: 20vh;
 }

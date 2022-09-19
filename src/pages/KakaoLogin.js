@@ -1,33 +1,36 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL, getToken } from "../api";
+import Loading from "../components/Loading";
+import { setAccessToken, setRefreshToken } from "../token";
 
 function KakaoLogin() {
   const navigate = useNavigate();
 
-  const loginServer = "https://zerogift.p-e.kr:443/auth/login";
+  let response = null;
   const getKakaoToken = async () => {
     let code = new URL(window.location.href).searchParams.get("code");
-
-    const response = await fetch(`${loginServer}`, {
-      method: "POST",
-      body: {
-        provider: "Kakao",
-        code: code,
-      },
-    });
-    const data = await response.json();
-    if (data.access_token) {
-      const ACCESS_TOKEN = data.access_token;
-      // navigate("/shop");
-    } else {
-      // navigate("/login");
+    try {
+      response = await getToken(`${BASE_URL}/auth/login/kakao?code=${code}`);
+    } catch (error) {
+      console.log(error);
+      alert("로그인에 실패하였습니다.");
+      navigate("/login");
+    }
+    if (response.status === 200) {
+      setAccessToken(response.accessToken);
+      setRefreshToken(response.refreshToken);
+      navigate("/shop");
     }
   };
 
-  getKakaoToken();
+  useEffect(() => {
+    getKakaoToken();
+  }, []);
 
   return (
     <div>
-      <div>로그인 중입니다. 잠시만 기다려 주세요.</div>
+      <Loading />
     </div>
   );
 }

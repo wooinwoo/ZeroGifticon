@@ -11,7 +11,7 @@ export default function ScrollWrapper({ children, setItems, url }) {
   const getItems = async () => {
     setLoading(true);
     setTimeout(() => {
-      axios.get(`${url}?_page=${page}&_limit=${5}`).then((res) => {
+      axios.get(`${url}?_page=${page}&_limit=${10}`).then((res) => {
         setItems((items) => [...items, ...res.data]);
       });
     }, 100);

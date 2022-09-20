@@ -65,13 +65,15 @@
 .selectFilter{
   height: 4vh;
   font-size: 12px;
-  border: 0;
+  border: none;
+  /* border-radius: 0; */
+  /* border-style: none; */
   outline: 0 none;
   appearance:none;
   -webkit-appearance:none; 
-  -moz-appearance:none;
+  text-shadow: none;
   background-color: transparent;
-  box-shadow: 0;
+  box-shadow: none;
 }
 
 .editBtn{
@@ -95,6 +97,11 @@
   border-radius: 10px;
   margin-right: 10px;
 }
+.delBtn:hover{
+  color: white;
+  background-color: #ff0000;
+}
+
 
 .table{
   border: 1px solid #D1D1D1;

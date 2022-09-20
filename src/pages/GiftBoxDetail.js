@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./pageStyles/GiftBoxDetail.module.css";
 import { useParams } from "react-router-dom";
-import { getData, TEMP_URL } from "../api";
+import { getData, BASE_URL } from "../api";
 import Barcode from "react-barcode/lib/react-barcode";
+import { cookie } from "../token";
 
 function GiftBoxDetail() {
   const { giftId } = useParams();
@@ -11,7 +12,10 @@ function GiftBoxDetail() {
   console.log(giftId);
 
   const handleLoad = async () => {
-    const gifts = await getData(`${TEMP_URL}/${giftId}`);
+    const gifts = await getData(
+      `${BASE_URL}/${giftId}`,
+      cookie.get("accessToken")
+    );
     setItem(gifts);
   };
 

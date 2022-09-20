@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getData, TEMP_URL } from "../api";
+import { getData, BASE_URL } from "../api";
 import { Link } from "react-router-dom";
 import styles from "./pageStyles/GiftBox.module.css";
+import { cookie } from "../token";
 
 function formatDate(value) {
   const date = new Date(value);
@@ -54,7 +55,7 @@ function GiftBox() {
   const [items, setItems] = useState([]);
 
   const handleLoad = async () => {
-    const gifts = await getData(TEMP_URL);
+    const gifts = await getData(BASE_URL, cookie.get("accessToken"));
     setItems(gifts);
   };
 

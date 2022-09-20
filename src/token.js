@@ -3,14 +3,14 @@ import { BASE_URL, getData } from "./api";
 
 export const cookie = new Cookies();
 
-export const logOut = async (token) => {
-  cookie.remove("accessToken");
-  localStorage.removeItem("refreshToken");
-  if (token) {
-    const response = getData(`${BASE_URL}/auth/logout`, token);
-    if (response.status !== 200)
-      alert('로그아웃에 실패했습니다.');
+export const logOut = async () => {
+  if (cookie.get("accessToken")) {
+    const token = cookie.get("accessToken");
+    getData(`${BASE_URL}/auth/logout`, token);
+    cookie.remove("accessToken");
   }
+  if (localStorage.getItem("refreshToken"))
+    localStorage.removeItem("refreshToken");
   alert("로그인 후 이용 가능합니다.");
 };
 

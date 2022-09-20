@@ -4,9 +4,9 @@ import styles from "./Header.module.css";
 import Tabs from "./components/Tabs";
 import Bell from "./components/Bell";
 import BackButton from "./components/BackButton";
-import { cookie, logOut, setAccessToken } from "./token";
+import { logOut, setAccessToken } from "./token";
 import { useEffect } from "react";
-import { BASE_URL, updateToken } from "./api";
+import { handleData } from "./api";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -32,23 +32,41 @@ export default function Header() {
   };
 
   const checkLogin = async () => {
-    if (cookie.get("accessToken") || pageOption[path].length === 0) {
+    const accessTokenBefore = window.localStorage.getItem("accessToken");
+    const accessToken = JSON.parse(accessTokenBefore);
+    if (accessToken) {
+      const accessExpires = Date.parse(accessToken.expires);
+      let now = new Date();
+      if (accessExpires > now) {
+        window.localStorage.removeItem("accessToken");
+      }
+    }
+    if (accessToken) {
       return;
     }
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (refreshToken && Date.now() < refreshToken.expires) {
+    const refreshTokenBefore = window.localStorage.getItem("refreshToken");
+    const refreshToken = JSON.parse(refreshTokenBefore);
+
+    if (refreshToken) {
+      const refreshExpires = Date.parse(refreshToken.expires);
+      let now = new Date();
+      if (refreshExpires > now) {
+        logOut();
+      }
+    }
+
+    if (refreshToken) {
       let response = "";
       try {
-        response = await updateToken(`${BASE_URL}/auth/refresh`, refreshToken);
-        if (response.state === 200) {
-          setAccessToken(response.accessToken);
+        response = await handleData.updateToken(`/auth/refresh`);
+        if (response.status === 200) {
+          setAccessToken(response.data.accessToken);
         }
       } catch (error) {
-        logOut();
+        window.localStorage.removeItem("refreshToken");
         navigate("/");
       }
     } else {
-      logOut();
       navigate("/");
     }
   };

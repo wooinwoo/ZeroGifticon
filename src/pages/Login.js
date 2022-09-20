@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../images/heart.png";
 import KaKaoLoginImg from "../images/kakao_login_large_wide.png";
 import { KAKAO_AUTH_URL } from "../OAuth";
-import { cookie } from "../token";
 import styles from "./pageStyles/Login.module.css";
 
 function Login() {
@@ -13,7 +12,9 @@ function Login() {
   };
 
   const haveToken = () => {
-    if (cookie.get("accessToken")) {
+    const accessToken = window.localStorage.getItem("accessToken");
+
+    if (accessToken) {
       navigate("/shop");
     }
   };

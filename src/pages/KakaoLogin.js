@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL, getToken } from "../api";
+import { handleData } from "../api";
 import Loading from "../components/Loading";
 import { setAccessToken, setRefreshToken } from "../token";
 
@@ -12,10 +12,11 @@ function KakaoLogin() {
   let response = null;
   const getKakaoToken = async () => {
     try {
-      response = await getToken(`${BASE_URL}/auth/login/kakao?code=${code}`);
+      response = await handleData.getToken(`/auth/login/kakao?code=${code}`);
       if (response.status === 200) {
-        setAccessToken(response.accessToken);
-        setRefreshToken(response.refreshToken);
+        window.localStorage.clear();
+        setAccessToken(response.data.accessToken);
+        setRefreshToken(response.data.refreshToken);
         navigate("/shop");
       }
     } catch (error) {

@@ -204,16 +204,6 @@
   "product": [
     {
       "img": "",
-      "title": "인석 갈비",
-      "category": "없음",
-      "price": "22",
-      "volume": "1",
-      "registrationDate": "2022-9-17",
-      "description": "",
-      "id": 2
-    },
-    {
-      "img": "",
       "title": "잉어 갈비",
       "category": "없음",
       "price": "1234",
@@ -351,6 +341,36 @@
       "registrationDate": "2022-9-17",
       "description": "222",
       "id": 17
+    },
+    {
+      "img": "",
+      "title": "123",
+      "category": "식품",
+      "price": "4124124",
+      "volume": "12412421",
+      "registrationDate": "2022-9-20",
+      "description": "1",
+      "id": 18
+    },
+    {
+      "img": "",
+      "title": "123",
+      "category": "없음",
+      "price": "123",
+      "volume": "123",
+      "registrationDate": "2022-9-20",
+      "description": "",
+      "id": 19
+    },
+    {
+      "img": "",
+      "title": "dasdsadasdasdas",
+      "category": "음료",
+      "price": "4124",
+      "volume": "1213",
+      "registrationDate": "2022-9-20",
+      "description": "",
+      "id": 20
     }
   ]
 }

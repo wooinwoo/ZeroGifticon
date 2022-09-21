@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import styles from "./pageStyles/Shop.module.css";
 
 import ListItemLayout from "../components/ListItemLayout";
+import ScrollWrapper from "../components/ScrollWrapper";
+import { handleData } from "../api";
+
 import viewIcon from "../images/view.svg";
 import heartIcon from "../images/heart.svg";
-import ScrollWrapper from "../components/ScrollWrapper";
-
 import searchImg from "../images/search-icon.svg";
 import food from "../images/food.png";
 import beverage from "../images/beverage.png";
@@ -17,7 +18,6 @@ import health from "../images/health.png";
 import luxury from "../images/luxury.png";
 import other from "../images/other.png";
 
-import { getData } from "../api";
 function Shop() {
   const [items, setItems] = useState([]);
   const [searchValue, setSerchValue] = useState("");
@@ -33,7 +33,13 @@ function Shop() {
   ];
 
   const searchFilter = () => {
-    console.log("필터 기능 보내기");
+    console.log(searchValue);
+    handleData
+      .getData(`/product/search?q=${searchValue}&idx=0&size=500`)
+      .then((res) => {
+        console.log(res);
+        setItems(() => [...res.data]);
+      });
   };
   const onCheckEnter = (e) => {
     if (e.key === "Enter") {
@@ -41,9 +47,14 @@ function Shop() {
     }
   };
 
+  console.log(items);
   return (
     <div className={styles.wrap}>
-      <ScrollWrapper setItems={setItems} url={"http://localhost:5000/memo"}>
+      <ScrollWrapper
+        setItems={setItems}
+        url={
+          "/product/list?categories=BIRTHDAY,CLOTH,COSMETIC,DELIVERY,FOOD,GIFTCARD,HEALTH,LUXURY,OTHER&idx=0&size=10"
+        }>
         <div className={styles.categoryArea}>
           <div className={styles.searchBox}>
             <input
@@ -66,13 +77,13 @@ function Shop() {
         <div className={styles.productArea}>
           {items.map((data) => (
             <Link to="/shop/shop-detail" state={{ data }} key={data.id}>
-              <ListItemLayout imgSrc={data.img} title={data.title}>
+              <ListItemLayout imgSrc={data.img} title={data.name}>
                 <div className={styles.body}>{data.body}</div>
                 <div className={styles.iconArea}>
                   <img src={viewIcon} alt="viewIcon" />
-                  <span>{data.views}</span>
+                  <span>{data.viewCount}</span>
                   <img src={heartIcon} alt="heartIcon" />
-                  <span>{data.heart}</span>
+                  <span>{data.likeCount}</span>
                 </div>
               </ListItemLayout>
             </Link>

@@ -85,7 +85,7 @@ function EditMyProduct() {
         </div>
         <div>
           <div className={styles.name}>설명</div>
-          <input
+          <textarea
             className={cx(styles.input, styles.descriptionInput)}
             placeholder="설명"
             onChange={(e) =>

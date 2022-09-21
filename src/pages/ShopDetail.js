@@ -6,7 +6,7 @@ import viewIcon from "../images/view.svg";
 import heartIcon from "../images/heart.svg";
 function ShopDetail() {
   const data = useLocation().state.data;
-  console.log(data);
+  const heart = () => {};
   return (
     <div className={styles.container}>
       <img src={data.img} className={styles.mainImg} alt="" />
@@ -15,15 +15,19 @@ function ShopDetail() {
         <span className={styles.price}>{data.price}원</span>
         <div className={styles.iconArea}>
           <img src={viewIcon} alt="viewIcon" />
-          <span>{data.views}</span>
+          <span>{data.viewCount}</span>
           <img src={heartIcon} alt="heartIcon" />
-          <span>{data.heart}</span>
+          <span>{data.likeCount}</span>
         </div>
         <div className={styles.description}>{data.description}</div>
       </div>
 
       <div className={styles.btnArea}>
-        <button className={cx(styles.heartBtn, styles.btn)}>♡ 좋아요</button>
+        <button
+          className={cx(styles.heartBtn, styles.btn)}
+          onClick={() => heart()}>
+          ♡ 좋아요
+        </button>
         <Link to="/shop/gift" state={data}>
           <button className={cx(styles.giftBtn, styles.btn)}>선물하기</button>
         </Link>

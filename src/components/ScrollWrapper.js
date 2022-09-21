@@ -3,6 +3,7 @@ import { useInView } from "react-intersection-observer";
 import axios from "axios";
 import styles from "./componentStyles/ScrollWrapper.module.css";
 
+import { handleData } from "../api";
 export default function ScrollWrapper({ children, setItems, url }) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -11,7 +12,8 @@ export default function ScrollWrapper({ children, setItems, url }) {
   const getItems = async () => {
     setLoading(true);
     setTimeout(() => {
-      axios.get(`${url}?_page=${page}&_limit=${10}`).then((res) => {
+      handleData.getData(url).then((res) => {
+        console.log(res);
         setItems((items) => [...items, ...res.data]);
       });
     }, 100);
@@ -23,7 +25,6 @@ export default function ScrollWrapper({ children, setItems, url }) {
       getItems();
     }
   }, [inView, loading]);
-
   return (
     <div className={styles.container}>
       {children}

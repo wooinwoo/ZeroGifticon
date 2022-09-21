@@ -12,11 +12,34 @@ function Login() {
   };
 
   const haveToken = () => {
-    const accessToken = window.localStorage.getItem("accessToken");
+    const accessToken = JSON.parse(window.localStorage.getItem("accessToken"));
+    if (accessToken) {
+      const accessExpires = new Date(accessToken.expires.slice(0, -1));
+      let now = new Date();
+      if (accessExpires > now) {
+        window.localStorage.removeItem("accessToken");
+      }
+    }
 
     if (accessToken) {
       navigate("/shop");
+      return;
     }
+
+    const refreshToken = JSON.parse(
+      window.localStorage.getItem("refreshToken")
+    );
+
+    if (refreshToken) {
+      const refreshExpires = new Date(refreshToken.expires.slice(0, -1));
+      let now = new Date();
+      if (refreshExpires > now) {
+        window.localStorage.removeItem("refreshToken");
+        return;
+      }
+    }
+
+    navigate("/shop");
   };
 
   useEffect(() => {

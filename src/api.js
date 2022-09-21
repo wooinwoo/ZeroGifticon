@@ -1,16 +1,7 @@
 import axios from "axios";
+import { getAccessToken } from "./token";
 
 export const BASE_URL = "https://zerogift.p-e.kr";
-
-export function checkToken(name) {
-  const tokenBefore = window.localStorage.getItem(name);
-  const token = JSON.parse(tokenBefore);
-
-  if (!token) {
-    window.location.href = "https://zerogifticon.kro.kr/";
-  }
-  return token.token;
-}
 
 export const handleData = {
   getToken: async (url) => {
@@ -21,9 +12,7 @@ export const handleData = {
     return response.data;
   },
 
-  updateToken: async (url) => {
-    const token = checkToken("refreshToken");
-
+  updateToken: async (url, token) => {
     const response = await axios({
       method: "POST",
       url: `${BASE_URL}${url}`,
@@ -35,7 +24,7 @@ export const handleData = {
   },
 
   getData: async (url) => {
-    const token = checkToken("accessToken");
+    const token = await getAccessToken();
 
     const response = await axios({
       method: "GET",
@@ -48,7 +37,7 @@ export const handleData = {
   },
 
   createData: async (url, data) => {
-    const token = checkToken("accessToken");
+    const token = await getAccessToken();
 
     const response = await axios({
       method: "POST",
@@ -61,7 +50,7 @@ export const handleData = {
     return response.data;
   },
   PutData: async (url, data) => {
-    const token = checkToken("accessToken");
+    const token = await getAccessToken();
 
     const response = await axios({
       method: "PUT",
@@ -76,7 +65,7 @@ export const handleData = {
   },
 
   PatchData: async (url, data) => {
-    const token = checkToken("accessToken");
+    const token = await getAccessToken();
 
     const response = await axios({
       method: "PATCH",
@@ -91,7 +80,7 @@ export const handleData = {
   },
 
   deleteData: async (url) => {
-    const token = checkToken("accessToken");
+    const token = await getAccessToken();
 
     const response = await axios({
       method: "DELETE",
@@ -113,9 +102,7 @@ export async function getToken(url) {
   return response.data;
 }
 
-export async function updateToken(url) {
-  const token = checkToken("refreshToken");
-
+export async function updateToken(url, token) {
   const response = await axios({
     method: "POST",
     url: `${BASE_URL}${url}`,
@@ -127,7 +114,8 @@ export async function updateToken(url) {
 }
 
 export async function getData(url) {
-  const token = checkToken("accessToken");
+  const token = await getAccessToken();
+
   const response = await axios({
     method: "GET",
     url: `${BASE_URL}${url}`,
@@ -139,7 +127,7 @@ export async function getData(url) {
 }
 
 export async function createData(url, data) {
-  const token = checkToken("accessToken");
+  const token = await getAccessToken();
   const response = await axios({
     method: "POST",
     url: `${BASE_URL}${url}`,
@@ -153,7 +141,7 @@ export async function createData(url, data) {
 }
 
 export async function PutData(url, data) {
-  const token = checkToken("accessToken");
+  const token = await getAccessToken();
   const response = await axios({
     method: "PUT",
     url: `${BASE_URL}${url}`,
@@ -166,7 +154,7 @@ export async function PutData(url, data) {
   return response.data;
 }
 export async function PatchData(url, data) {
-  const token = checkToken("accessToken");
+  const token = await getAccessToken();
   const response = await axios({
     method: "PATCH",
     url: `${BASE_URL}${url}`,
@@ -179,7 +167,7 @@ export async function PatchData(url, data) {
 }
 
 export async function deleteData(url) {
-  const token = checkToken("accessToken");
+  const token = await getAccessToken();
   const response = await axios({
     method: "DELETE",
     url: `${BASE_URL}${url}`,

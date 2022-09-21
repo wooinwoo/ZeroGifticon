@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { getData, BASE_URL } from "../api";
+import { handleData } from "../api";
 import { Link } from "react-router-dom";
 import styles from "./pageStyles/GiftBox.module.css";
-import { cookie } from "../token";
-
 function formatDate(value) {
   const date = new Date(value);
   return `${date.getFullYear()}. ${date.getMonth()}. ${date.getDate()}`;
 }
-
 function GiftListItem({ item }) {
   return (
     <>
@@ -34,7 +31,6 @@ function GiftListItem({ item }) {
     </>
   );
 }
-
 function GiftList({ items }) {
   if (items.length === 0)
     return <div className={styles.noItem}>선물함이 비어 있습니다.</div>;
@@ -50,24 +46,19 @@ function GiftList({ items }) {
     </ul>
   );
 }
-
 function GiftBox() {
   const [items, setItems] = useState([]);
-
   const handleLoad = async () => {
-    const gifts = await getData(BASE_URL, cookie.get("accessToken"));
+    const gifts = await handleData.getData("/giftbox");
     setItems(gifts);
   };
-
   useEffect(() => {
     handleLoad();
   }, []);
-
   return (
     <>
       <GiftList items={items} />
     </>
   );
 }
-
 export default GiftBox;

@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
 import styles from "./pageStyles/GiftBoxDetail.module.css";
 import { useParams } from "react-router-dom";
-import { getData, BASE_URL } from "../api";
 import Barcode from "react-barcode/lib/react-barcode";
-import { cookie } from "../token";
+import { handleData } from "../api";
 
 function GiftBoxDetail() {
   const { giftId } = useParams();
   const [item, setItem] = useState({});
-
   console.log(giftId);
-
   const handleLoad = async () => {
-    const gifts = await getData(
-      `${BASE_URL}/${giftId}`,
-      cookie.get("accessToken")
-    );
+    const gifts = await handleData.getData(`/giftbox/${giftId}`);
     setItem(gifts);
   };
-
   useEffect(() => {
     handleLoad();
   }, []);
-
   console.log(item);
-
   return (
     <div className={styles.detail}>
       <img className={styles.itemImg} src={item.img} alt={item.title}></img>
@@ -37,5 +28,4 @@ function GiftBoxDetail() {
     </div>
   );
 }
-
 export default GiftBoxDetail;

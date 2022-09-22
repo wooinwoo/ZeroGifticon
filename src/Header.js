@@ -15,6 +15,7 @@ export default function Header() {
     "": [],
     login: [],
     oauth: [],
+    signup: [],
     shop: ["tab", "bell"],
     "shop-detail": ["bell", "back"],
     gift: ["bell", "back"],

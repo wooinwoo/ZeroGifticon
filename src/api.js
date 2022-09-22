@@ -23,6 +23,15 @@ export const handleData = {
     return response.data;
   },
 
+  getEmailToken: async (url, data) => {
+    const response = await axios({
+      method: "POST",
+      url: `${BASE_URL}${url}`,
+      data: data,
+    });
+    return response.data;
+  },
+
   getData: async (url) => {
     const token = await getAccessToken();
 

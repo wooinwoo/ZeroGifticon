@@ -69,5 +69,7 @@ export async function getAccessToken() {
   }
 
   logOut();
-  window.location.href = "https://zerogifticon.kro.kr";
+  // window.location.href = "https://zerogifticon.kro.kr";
+  window.location.href = "http://localhost:3000";
+
 }

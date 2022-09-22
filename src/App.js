@@ -15,6 +15,7 @@ import MyProduct from "./pages/MyProduct";
 import EditMyProduct from "./pages/EditMyProduct";
 import KakaoLogin from "./pages/KakaoLogin";
 import NotFoundPage from "./pages/NotFoundPage";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="login">
               <Route index element={<Login />} />
               <Route path="oauth" element={<KakaoLogin />} />
+              <Route path="signup" element={<SignUp />} />
             </Route>
             <Route path="shop">
               <Route index element={<Shop />} />

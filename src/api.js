@@ -16,9 +16,7 @@ export const handleData = {
     const response = await axios({
       method: "POST",
       url: `${BASE_URL}${url}`,
-      data: {
-        refreshToken: `${token}`,
-      },
+      data: token,
     });
     return response.data;
   },
@@ -28,6 +26,19 @@ export const handleData = {
       method: "POST",
       url: `${BASE_URL}${url}`,
       data: data,
+    });
+    return response.data;
+  },
+
+  sendLogOut: async (url) => {
+    const token = await getAccessToken();
+
+    const response = await axios({
+      method: "get",
+      url: `${BASE_URL}${url}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response.data;
   },

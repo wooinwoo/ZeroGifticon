@@ -1,8 +1,10 @@
 import { handleData } from "./api";
 
 export const logOut = async () => {
+  handleData.sendLogOut("/auth/logout");
   window.localStorage.clear();
   alert("로그인 후 이용 가능합니다.");
+  window.location.href = "http://localhost:3000";
 };
 
 export const setAccessToken = (accessToken) => {

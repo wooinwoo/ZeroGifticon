@@ -1,0 +1,15 @@
+.personal {
+  position: fixed;
+  top: 8px;
+  right: 100px;
+}
+
+.user {
+  margin: 5px;
+  font-size: 25px;
+}
+
+.logout {
+  margin: 5px;
+  font-size: 25px;
+}

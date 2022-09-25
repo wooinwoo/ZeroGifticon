@@ -4,6 +4,7 @@ import styles from "./Header.module.css";
 import Tabs from "./components/Tabs";
 import Bell from "./components/Bell";
 import BackButton from "./components/BackButton";
+import Personal from "./components/Personal";
 
 export default function Header() {
   const pathname = useLocation().pathname.split("/");
@@ -25,6 +26,7 @@ export default function Header() {
     thank: ["bell", "back"],
     "my-product": ["tab", "bell"],
     "edit-product": ["tab", "bell", "back"],
+    mypage: ["tab", "bell"],
     notification: ["back"],
   };
 
@@ -35,6 +37,7 @@ export default function Header() {
           선물하기
           {pageOption[path].includes("bell") ? <Bell /> : ""}
           {pageOption[path].includes("back") ? <BackButton /> : ""}
+          <Personal />
         </div>
       )}
       {pageOption[path].includes("tab") ? <Tabs /> : ""}

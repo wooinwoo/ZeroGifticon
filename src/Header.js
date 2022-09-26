@@ -22,11 +22,13 @@ export default function Header() {
     gift: ["bell", "back"],
     "gift-box": ["tab", "bell"],
     "gift-box-detail": ["bell", "back"],
-    review: ["bell", "back"],
-    thank: ["bell", "back"],
+    "gift-review": ["bell", "back"],
+    "gift-message": ["bell", "back"],
     "my-product": ["tab", "bell"],
     "edit-product": ["tab", "bell", "back"],
     mypage: ["tab", "bell"],
+    message: ["tab", "bell", "back"],
+    review: ["tab", "bell", "back"],
     notification: ["back"],
   };
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleData } from "../api";
 import Logo from "../images/heart.png";
 import KaKaoLoginImg from "../images/kakao_login_large_wide.png";
@@ -15,10 +15,12 @@ const INITIAL_VALUES = {
 function LoginForm({ onSubmit, onChange, onClick, values }) {
   return (
     <form onSubmit={onSubmit} className={styles.loginForm}>
-      <div className={styles.login}>로그인</div>
-      <button type="button" onClick={onClick}>
-        회원가입
-      </button>
+      <div className={styles.subtitle}>
+        <div>로그인</div>
+        <div onClick={onClick} className={styles.signup}>
+          회원가입
+        </div>
+      </div>
       <input
         className={styles.input}
         type="email"
@@ -26,7 +28,7 @@ function LoginForm({ onSubmit, onChange, onClick, values }) {
         value={values.email}
         onChange={onChange}
         placeholder="아이디 또는 이메일 주소"
-      ></input>
+      />
       <input
         className={styles.input}
         type="password"
@@ -34,7 +36,7 @@ function LoginForm({ onSubmit, onChange, onClick, values }) {
         value={values.password}
         onChange={onChange}
         placeholder="비밀번호"
-      ></input>
+      />
       <button className={styles.loginButton} type="submit">
         이메일 로그인
       </button>
@@ -92,15 +94,15 @@ function Login() {
     window.location.href = KAKAO_AUTH_URL;
   };
 
-  const handleSignUp = () => {
-    navigate("/login/signup");
-  };
-
   const handleChange = (e) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleClick = () => {
+    navigate("/login/signup");
   };
 
   const handleSubmit = async (e) => {
@@ -128,18 +130,14 @@ function Login() {
 
   return (
     <div className={styles.loginPage}>
-      <div className={styles.title}>
-        <div className={styles.logo}>Zero-gift</div>
-        <div>
-          . 마음을 선물해요
-          <img className={styles.logoImg} src={Logo} alt="로고" />
-        </div>
+      <div className={styles.header}>
+        <div className={styles.title}>ZeroGift</div>
+        <div className={styles.des}>마음을 선물해요</div>
       </div>
-      <div></div>
       <LoginForm
         onSubmit={handleSubmit}
         onChange={handleChange}
-        onClick={handleSignUp}
+        onClick={handleClick}
         values={values}
       />
       <LineForm />

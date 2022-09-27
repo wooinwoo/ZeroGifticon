@@ -16,6 +16,10 @@ import EditMyProduct from "./pages/EditMyProduct";
 import KakaoLogin from "./pages/KakaoLogin";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUp from "./pages/SignUp";
+import MyMessage from "./pages/MyMessage";
+import MyMessageDetail from "./pages/MyMessageDetail";
+import MyPage from "./pages/MyPage";
+import MyReview from "./pages/MyReview";
 
 function App() {
   return (
@@ -41,13 +45,21 @@ function App() {
                 path="gift-box-detail/:giftId"
                 element={<GiftBoxDetail />}
               />
+              <Route path="gift-review" element={<Review />} />
+              <Route path="gift-message" element={<ThankYou />} />
             </Route>
             <Route path="my-product">
               <Route index element={<MyProduct />} />
               <Route path="edit-product" element={<EditMyProduct />} />
             </Route>
-            <Route path="review" element={<Review />} />
-            <Route path="thank" element={<ThankYou />} />
+            <Route path="mypage">
+              <Route index element={<MyPage />} />
+              <Route path="review" element={<MyReview />} />
+              <Route path="message">
+                <Route index element={<MyMessage />} />
+                <Route path="message-detail" element={<MyMessageDetail />} />
+              </Route>
+            </Route>
             <Route path="notification" element={<Notification />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />

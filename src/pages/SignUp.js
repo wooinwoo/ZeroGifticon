@@ -41,37 +41,52 @@ function SignUp() {
     }
   };
 
+  const handleClick = () => {
+    navigate("/login");
+  };
+
   return (
-    <form onSubmit={handleSubmit} className={styles.loginForm}>
-      <div className={styles.signUp}>회원가입</div>
-      <input
-        className={styles.input}
-        type="email"
-        name="email"
-        value={values.email}
-        onChange={handleChange}
-        placeholder="아이디 또는 이메일 주소"
-      />
-      <input
-        className={styles.input}
-        type="text"
-        name="nickname"
-        value={values.nickname}
-        onChange={handleChange}
-        placeholder="닉네임"
-      />
-      <input
-        className={styles.input}
-        type="password"
-        name="password"
-        value={values.password}
-        onChange={handleChange}
-        placeholder="비밀번호"
-      />
-      <button className={styles.loginButton} type="submit">
-        이메일 인증하기
-      </button>
-    </form>
+    <div className={styles.signupPage}>
+      <div className={styles.header}>
+        <div className={styles.title}>ZeroGift</div>
+        <div className={styles.des}>마음을 선물해요</div>
+      </div>
+      <form onSubmit={handleSubmit} className={styles.signupForm}>
+        <div className={styles.subtitle}>
+          <div>회원가입</div>
+          <div onClick={handleClick} className={styles.login}>
+            로그인
+          </div>
+        </div>
+        <input
+          className={styles.input}
+          type="email"
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+          placeholder="아이디 또는 이메일 주소"
+        />
+        <input
+          className={styles.input}
+          type="text"
+          name="nickname"
+          value={values.nickname}
+          onChange={handleChange}
+          placeholder="닉네임"
+        />
+        <input
+          className={styles.input}
+          type="password"
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+          placeholder="비밀번호"
+        />
+        <button className={styles.loginButton} type="submit">
+          회원 가입
+        </button>
+      </form>
+    </div>
   );
 }
 

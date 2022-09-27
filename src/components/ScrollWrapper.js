@@ -28,7 +28,7 @@ export default function ScrollWrapper({ children, setItems, url }) {
   return (
     <div className={styles.container}>
       {children}
-      <div ref={ref}>.</div>
+      <div ref={ref}>{""}</div>
     </div>
   );
 }

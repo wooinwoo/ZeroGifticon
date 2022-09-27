@@ -4,7 +4,7 @@ import axios from "axios";
 import styles from "./pageStyles/MyProduct.module.css";
 import searchImg from "../images/search-icon.svg";
 
-import { getData } from "../api";
+import { handleData } from "../api";
 
 function MyProduct() {
   const [dataList, setDataList] = useState([]);
@@ -17,11 +17,12 @@ function MyProduct() {
   const headerMeta = ["", "분류", "상품명", "가격", "재고", "등록일"];
 
   useEffect(() => {
-    const res = getData("http://localhost:5000/product");
+    const res = handleData.getData("/admin/myproducts?idx=0&size=500");
     res.then((val) => {
-      setInitialData(val.slice());
-      setFilteredData(val);
-      setDataList(val);
+      console.log(val.data);
+      setInitialData(val.data.slice());
+      setFilteredData(val.data);
+      setDataList(val.data);
     });
   }, []);
 
@@ -31,7 +32,9 @@ function MyProduct() {
 
   const delBtn = () => {
     if (checkBox.length > 0) {
-      checkBox.map((i) => axios.delete(`http://localhost:5000/product/${i}`));
+      checkBox.map((i) =>
+        handleData.deleteData(`/admin/product?productId=${i}`)
+      );
       setDataList(
         dataList.filter((item) => !checkBox.includes(String(item.id)))
       );
@@ -43,7 +46,7 @@ function MyProduct() {
     let filteredSearchList = dataList;
     if (searchValue) {
       filteredSearchList = dataList.filter((item) =>
-        item.title.includes(searchValue)
+        item.name.includes(searchValue)
       );
     }
     if (category) {
@@ -109,8 +112,15 @@ function MyProduct() {
                   className={styles.select}
                   onChange={(e) => setCategory(e.target.value)}>
                   <option value="">모든카테고리</option>
-                  <option value="식품">식품</option>
-                  <option value="음료">음료</option>
+                  <option value="BIRTHDAY">BIRTHDAY</option>
+                  <option value="CLOTH">CLOTH</option>
+                  <option value="COSMETIC">COSMETIC</option>
+                  <option value="DELIVERY">DELIVERY</option>
+                  <option value="FOOD">FOOD</option>
+                  <option value="GIFTCARD">GIFTCARD</option>
+                  <option value="HEALTH">HEALTH</option>
+                  <option value="LUXURY">LUXURY</option>
+                  <option value="OTHER">OTHER</option>
                 </select>
                 <input
                   className={styles.searchFilter}
@@ -205,11 +215,11 @@ const TableRow = ({ data, checkBox, setCheckBox }) => {
       <td>
         <div className={styles.nameContainer}>
           <img src={data.img} className={styles.productImg} alt="" />
-          <span>{data.title}</span>
+          <span>{data.name}</span>
         </div>
       </td>
       <td> {data.price} </td>
-      <td> {data.volume} </td>
+      <td> {data.count} </td>
       <td> {data.registrationDate} </td>
     </tr>
   );

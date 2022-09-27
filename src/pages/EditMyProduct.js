@@ -3,22 +3,24 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./pageStyles/EditMyProduct.module.css";
 import cx from "clsx";
+import { handleData } from "../api";
 
 function EditMyProduct() {
   const [productState, setProductState] = useState({
-    img: "",
-    title: "",
+    // img: "",
+    name: "",
     category: "없음",
     price: 0,
-    volume: 0,
-    registrationDate: "",
+    count: 0,
+    productImageIds: [],
     description: "",
   });
 
   const post_data = async () => {
     const now = new Date();
-    await axios
-      .post("http://localhost:5000/product", {
+    console.log(productState);
+    handleData
+      .createData("/admin/product", {
         ...productState,
         registrationDate: `${now.getFullYear()}-${
           now.getMonth() + 1
@@ -27,6 +29,9 @@ function EditMyProduct() {
       .then(function (response) {
         console.log(response); //성공
       });
+    console.log({
+      ...productState,
+    });
   };
   return (
     <div className={styles.Container}>
@@ -37,7 +42,7 @@ function EditMyProduct() {
             className={cx(styles.input, styles.titleInput)}
             placeholder="상품명"
             onChange={(e) =>
-              setProductState({ ...productState, title: e.target.value })
+              setProductState({ ...productState, name: e.target.value })
             }
           />
         </div>
@@ -48,8 +53,15 @@ function EditMyProduct() {
               setProductState({ ...productState, category: e.target.value })
             }>
             <option value=""></option>
-            <option value="식품">식품</option>
-            <option value="음료">음료</option>
+            <option value="BIRTHDAY">BIRTHDAY</option>
+            <option value="CLOTH">CLOTH</option>
+            <option value="COSMETIC">COSMETIC</option>
+            <option value="DELIVERY">DELIVERY</option>
+            <option value="FOOD">FOOD</option>
+            <option value="GIFTCARD">GIFTCARD</option>
+            <option value="HEALTH">HEALTH</option>
+            <option value="LUXURY">LUXURY</option>
+            <option value="OTHER">OTHER</option>
           </select>
         </div>
         <div className={styles.selecArea}>
@@ -69,7 +81,10 @@ function EditMyProduct() {
             className={cx(styles.input, styles.priceInput)}
             placeholder="가격"
             onChange={(e) =>
-              setProductState({ ...productState, price: e.target.value })
+              setProductState({
+                ...productState,
+                price: parseInt(e.target.value),
+              })
             }
           />
         </div>
@@ -79,7 +94,10 @@ function EditMyProduct() {
             className={cx(styles.input, styles.volumeInput)}
             placeholder="수량"
             onChange={(e) =>
-              setProductState({ ...productState, volume: e.target.value })
+              setProductState({
+                ...productState,
+                count: parseInt(e.target.value),
+              })
             }
           />
         </div>

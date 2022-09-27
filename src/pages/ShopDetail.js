@@ -1,12 +1,18 @@
 import { useLocation, Link } from "react-router-dom";
 import styles from "./pageStyles/ShopDetail.module.css";
 import cx from "clsx";
+import { handleData } from "../api";
 
 import viewIcon from "../images/view.svg";
 import heartIcon from "../images/heart.svg";
 function ShopDetail() {
   const data = useLocation().state.data;
-  const heart = () => {};
+  const heart = () => {
+    const res = handleData.PutData(`/user/${data.id}/likes`);
+    res.then((val) => {
+      console.log(val.data);
+    });
+  };
   return (
     <div className={styles.container}>
       <img src={data.img} className={styles.mainImg} alt="" />

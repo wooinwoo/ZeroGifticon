@@ -16,6 +16,7 @@ import EditMyProduct from "./pages/EditMyProduct";
 import KakaoLogin from "./pages/KakaoLogin";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUp from "./pages/SignUp";
+import Payment from "./pages/Payment";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route index element={<Shop />} />
               <Route path="shop-detail" element={<ShopDetail />} />
               <Route path="gift" element={<Gift />} />
+              <Route path="payment" element={<Payment />} />
             </Route>
             <Route path="gift-box">
               <Route index element={<GiftBox />} />

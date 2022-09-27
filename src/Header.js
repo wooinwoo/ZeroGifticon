@@ -19,6 +19,7 @@ export default function Header() {
     shop: ["tab", "bell"],
     "shop-detail": ["bell", "back"],
     gift: ["bell", "back"],
+    payment: ["bell", "back"],
     "gift-box": ["tab", "bell"],
     "gift-box-detail": ["bell", "back"],
     review: ["bell", "back"],

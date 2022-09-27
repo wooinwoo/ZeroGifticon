@@ -3,10 +3,11 @@
   top: 0px;
   display: flex;
   justify-content: center;
-  height: 8vh;
+  height: max(8vh,55px);
   font-size: 20px;
   font-weight: 800;
-  line-height: 8vh;
+  line-height: max(8vh,55px);;
   background-color: white;
   z-index:9999;
+  border-bottom: 1px solid #808080;
 }

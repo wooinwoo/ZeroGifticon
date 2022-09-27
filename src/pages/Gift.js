@@ -1,69 +1,70 @@
 import styles from "./pageStyles/Gift.module.css";
 
-import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
+import { handleData } from "../api";
+
+import SearchBar from "../components/SearchBar";
 
 export default function Gift() {
-  const data = useLocation().state;
-  console.log(data);
-  const [productState, setProductState] = useState({
-    img: data.img,
-    title: data.title,
-    body: data.body,
-    price: data.price,
-    description: "",
-  });
+  // const data = useLocation().state;
+  const [memberList, setMemberList] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [data, setData] = useState(useLocation().state);
+  const defaultImg =
+    "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg";
 
-  const post_data = () => {
-    axios.post("1", { ...productState }).then(function (response) {
-      console.log(response); //성공
-    });
+  useEffect(() => {
+    handleData
+      .getData(`/member-search/member-list?page=0&size=10`)
+      .then((res) => {
+        setMemberList(res.data.memberSearchOutputDtoList);
+        setFilteredData(res.data.memberSearchOutputDtoList);
+      });
+  }, []);
+
+  const searchFilter = (searchValue) => {
+    let filteredSearchList = memberList;
+    if (searchValue) {
+      filteredSearchList = memberList.filter((item) =>
+        item.nickname.includes(searchValue)
+      );
+    }
+    setFilteredData(filteredSearchList);
   };
 
+  const onErrorImg = (e) => {
+    e.target.src = defaultImg;
+  };
+  console.log(data);
   return (
-    <div className={styles.Container}>
-      <div className={styles.editArea}>
-        <h1 className={styles.mainName}>결제창</h1>
-        <div className={styles.titleArea}>
-          <img href={data.img} alt="" className={styles.img} />
-          <div>
-            <p className={styles.title}>{data.title}</p>
-            <p className={styles.body}>{data.body}</p>
-          </div>
-        </div>
-
-        <div className={styles.infoArea}>
-          <span className={styles.name}>결제금액</span>
-          <span className={styles.price}>{data.price}원</span>
-        </div>
-        <div className={styles.infoArea}>
-          <span className={styles.name}>포인트</span>
-          <span className={styles.point}>보유 1,000P</span>
-        </div>
-
-        <div className={styles.infoArea}>
-          <input
-            className={styles.pInput}
-            placeholder="가격"
-            onChange={(e) =>
-              setProductState({ ...productState, price: e.target.value })
-            }
-          />
-          <button className={styles.pointBtn}>전액사용</button>
-        </div>
-        <div className={styles.userName}>보내는 사람</div>
-        <input
-          className={styles.sInput}
-          placeholder="고마워 친구야 ...."
-          onChange={(e) =>
-            setProductState({ ...productState, description: e.target.value })
-          }
-        />
-        <Link to={"/shop"} className={styles.sendBtn} onClick={post_data}>
-          보내기
-        </Link>
+    <div className={styles.container}>
+      <h1 className={styles.title}>선물할 친구를 선택해주세요</h1>
+      <SearchBar searchFilter={searchFilter} />
+      <div className={styles.memberArea}>
+        {filteredData.map((d) => (
+          <button
+            className={styles.profile}
+            key={d.id + d.nickname}
+            id={d.nickname}
+            onClick={() => setData({ ...data, nickname: d.nickname })}>
+            {d.profileImageUrl != null ? (
+              <img
+                className={styles.img}
+                src={d.profileImageUrl}
+                alt=""
+                onError={onErrorImg}
+              />
+            ) : (
+              <img className={styles.img} src={defaultImg} alt="" />
+            )}
+            <span className={styles.nickname}>{d.nickname}</span>
+          </button>
+        ))}
       </div>
+      <Link to={"/shop/payment"} className={styles.sendBtn} state={data}>
+        보내기
+      </Link>
     </div>
   );
 }

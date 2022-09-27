@@ -1,8 +1,10 @@
 import { handleData } from "./api";
 
 export const logOut = async () => {
+  handleData.sendLogOut("/auth/logout");
   window.localStorage.clear();
   alert("로그인 후 이용 가능합니다.");
+  window.location.href = "http://localhost:3000";
 };
 
 export const setAccessToken = (accessToken) => {
@@ -31,9 +33,9 @@ export async function getAccessToken() {
   const accessToken = JSON.parse(window.localStorage.getItem("accessToken"));
 
   if (accessToken) {
-    const accessExpires = new Date(accessToken.expires.slice(0, -1));
+    const accessExpires = new Date(accessToken.expires);
     let now = new Date();
-    if (accessExpires > now) {
+    if (accessExpires < now) {
       window.localStorage.removeItem("accessToken");
     }
   }
@@ -45,9 +47,9 @@ export async function getAccessToken() {
   const refreshToken = JSON.parse(window.localStorage.getItem("refreshToken"));
 
   if (refreshToken) {
-    const refreshExpires = new Date(refreshToken.expires.slice(0, -1));
+    const refreshExpires = new Date(refreshToken.expires);
     let now = new Date();
-    if (refreshExpires > now) {
+    if (refreshExpires < now) {
       window.localStorage.removeItem("refreshToken");
     }
   }
@@ -68,8 +70,9 @@ export async function getAccessToken() {
     }
   }
 
-  logOut();
-  // window.location.href = "https://zerogifticon.kro.kr";
-  window.location.href = "http://localhost:3000";
-
+  if (!refreshToken) {
+    logOut();
+    // window.location.href = "https://zerogifticon.kro.kr";
+    window.location.href = "http://localhost:3000";
+  }
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { handleData } from "../api";
-import Logo from "../images/heart.png";
 import KaKaoLoginImg from "../images/kakao_login_large_wide.png";
 import { KAKAO_AUTH_URL } from "../OAuth";
 import { setAccessToken, setRefreshToken } from "../token";
@@ -120,7 +119,6 @@ function Login() {
     } catch (error) {
       setValues(INITIAL_VALUES);
       alert("로그인에 실패하였습니다.");
-      navigate("/login");
     }
   };
 

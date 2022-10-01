@@ -1,8 +1,9 @@
 import styles from "./pageStyles/Payment.module.css";
 
-import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
+
+import { handleData } from "../api";
 
 export default function Payment() {
   const data = useLocation().state;
@@ -14,11 +15,29 @@ export default function Payment() {
     price: data.price,
     description: "",
   });
+  const [item, setItem] = useState([]);
+
+  useEffect(() => {
+    const response = handleData.getData("/member-search/member");
+    setItem(response.data);
+  }, []);
 
   const post_data = () => {
-    axios.post("1", { ...productState }).then(function (response) {
-      console.log(response); //성공
-    });
+    console.log(1);
+    handleData
+      .createData("/pay", {
+        impUid: "아임포트 아이디값",
+        merchantUid: "상점 아이디 값",
+        message: productState.description,
+        pgProvider: "PG 아이디 값",
+        pgTid: "PG 거래번호",
+        productId: data.id,
+        sendId: 0,
+        usePoint: 0,
+      })
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   return (
@@ -39,7 +58,8 @@ export default function Payment() {
         </div>
         <div className={styles.infoArea}>
           <span className={styles.name}>포인트</span>
-          <span className={styles.point}>보유 1,000P</span>
+          {/* <span className={styles.point}>보유 {item.point}P</span> */}
+          <span className={styles.point}>보유 1000P</span>
         </div>
 
         <div className={styles.infoArea}>
@@ -53,7 +73,7 @@ export default function Payment() {
           <button className={styles.pointBtn}>전액사용</button>
         </div>
         <div className={styles.userName}>{data.nickname}</div>
-        <input
+        <textarea
           className={styles.sInput}
           placeholder="고마워 친구야 ...."
           onChange={(e) =>

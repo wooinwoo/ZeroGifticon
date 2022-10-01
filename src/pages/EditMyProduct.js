@@ -1,11 +1,13 @@
-import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./pageStyles/EditMyProduct.module.css";
 import cx from "clsx";
 import { handleData } from "../api";
+import { useForm } from "react-hook-form";
 
 function EditMyProduct() {
+  const [files, setFiles] = useState("");
+  const data = useLocation();
   const [productState, setProductState] = useState({
     // img: "",
     name: "",
@@ -16,12 +18,38 @@ function EditMyProduct() {
     description: "",
   });
 
+  const uploadFileHandler = (event) => {
+    setFiles(event.target.files);
+  };
+
+  const fileSubmitHandler = () => {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append(`files`, files[i]);
+    }
+    console.log(formData);
+    handleData
+      .createData("/admin/upload", formData)
+      .then(async (response) => {
+        const imgIds = [];
+        response.data.map((e) => imgIds.push(e.productImageId));
+        setProductState({ ...productState, productImageIds: imgIds });
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error while uploading file!", error);
+      });
+  };
+
   const post_data = async () => {
     const now = new Date();
-    console.log(productState);
     handleData
       .createData("/admin/product", {
         ...productState,
+        // productImageIds: files,
         registrationDate: `${now.getFullYear()}-${
           now.getMonth() + 1
         }-${now.getDate()}`,
@@ -29,10 +57,8 @@ function EditMyProduct() {
       .then(function (response) {
         console.log(response); //성공
       });
-    console.log({
-      ...productState,
-    });
   };
+
   return (
     <div className={styles.Container}>
       <div className={styles.editArea}>
@@ -66,14 +92,18 @@ function EditMyProduct() {
         </div>
         <div className={styles.selecArea}>
           <span className={styles.name}>사진 선택</span>
-          <input
-            type="file"
-            accept="image/*"
-            placeholder=""
-            onChange={(e) =>
-              setProductState({ ...productState, img: e.target.value })
-            }
-          />
+          <form encType="multipart/form-data">
+            <input
+              type="file"
+              accept="image/*"
+              placeholder=""
+              onChange={(e) => uploadFileHandler(e)}
+              multiple
+            />
+            <button type="button" onClick={(e) => fileSubmitHandler(e)}>
+              버튼
+            </button>
+          </form>
         </div>
         <div>
           <div className={styles.name}>가격</div>
@@ -111,7 +141,10 @@ function EditMyProduct() {
             }
           />
         </div>
-        <Link to={"/my-product"} className={styles.saveBtn} onClick={post_data}>
+        <Link
+          to={"/my-product"}
+          className={styles.saveBtn}
+          onClick={() => post_data()}>
           저장
         </Link>
       </div>

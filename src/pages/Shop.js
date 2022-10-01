@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./pageStyles/Shop.module.css";
 
@@ -9,11 +9,13 @@ import { handleData } from "../api";
 import viewIcon from "../images/view.svg";
 import heartIcon from "../images/heart.svg";
 import searchImg from "../images/search-icon.svg";
+
+import birthday from "../images/birthday.png";
 import food from "../images/food.png";
-import beverage from "../images/beverage.png";
 import giftcard from "../images/giftcard.png";
 import cloth from "../images/cloth.png";
 import cosmetic from "../images/cosmetic.png";
+import delivery from "../images/delivery.png";
 import health from "../images/health.png";
 import luxury from "../images/luxury.png";
 import other from "../images/other.png";
@@ -21,15 +23,17 @@ import other from "../images/other.png";
 function Shop() {
   const [items, setItems] = useState([]);
   const [searchValue, setSerchValue] = useState("");
+
   const category = [
-    { name: "식품", img: food },
-    { name: "음료", img: beverage },
-    { name: "기프트카드", img: giftcard },
-    { name: "옷", img: cloth },
-    { name: "화장품", img: cosmetic },
-    { name: "운동", img: health },
-    { name: "럭셔리", img: luxury },
-    { name: "기타", img: other },
+    { name: "생일", img: birthday, category: false, value: "BIRTHDAY" },
+    { name: "식품", img: food, category: false, value: "FOOD" },
+    { name: "배달", img: delivery, category: false, value: "DELIVERY" },
+    { name: "기프트카드", img: giftcard, category: false, value: "GIFTCARD" },
+    { name: "옷", img: cloth, category: false, value: "CLOTH" },
+    { name: "화장품", img: cosmetic, category: false, value: "COSMETIC" },
+    { name: "운동", img: health, category: false, value: "HEALTH" },
+    { name: "럭셔리", img: luxury, category: false, value: "LUXURY" },
+    { name: "기타", img: other, category: false, value: "OTHER" },
   ];
 
   const searchFilter = () => {
@@ -46,15 +50,10 @@ function Shop() {
       searchFilter();
     }
   };
-
   console.log(items);
   return (
     <div className={styles.wrap}>
-      <ScrollWrapper
-        setItems={setItems}
-        url={
-          "/product/list?categories=BIRTHDAY,CLOTH,COSMETIC,DELIVERY,FOOD,GIFTCARD,HEALTH,LUXURY,OTHER&idx=0&size=10"
-        }>
+      <ScrollWrapper setItems={setItems}>
         <div className={styles.categoryArea}>
           <div className={styles.searchBox}>
             <input
@@ -67,17 +66,22 @@ function Shop() {
               <img src={searchImg} alt="" className={styles.searchImg} />
             </button>
           </div>
-          {category.map((data) => (
-            <button className={styles.categoryBtn}>
-              <img src={data.img} alt="" className={styles.img} />
-              <div>{data.name}</div>
-            </button>
-          ))}
+          <div className={styles.categoryBtnWrap}>
+            {category.map((data) => (
+              <button className={styles.categoryBtn} key={data.img}>
+                <img src={data.img} alt="" className={styles.img} />
+                <div>{data.name}</div>
+              </button>
+            ))}
+          </div>
         </div>
         <div className={styles.productArea}>
           {items.map((data) => (
-            <Link to="/shop/shop-detail" state={{ data }} key={data.id}>
-              <ListItemLayout imgSrc={data.img} title={data.name}>
+            <Link to="/shop/shop-detail" state={{ data }}>
+              <ListItemLayout
+                imgSrc={data.mainImageUrl}
+                title={data.name}
+                key={data.id + data.name + new Date()}>
                 <div className={styles.body}>{data.body}</div>
                 <div className={styles.iconArea}>
                   <img src={viewIcon} alt="viewIcon" />

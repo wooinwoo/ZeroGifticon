@@ -4,18 +4,21 @@ import axios from "axios";
 import styles from "./componentStyles/ScrollWrapper.module.css";
 
 import { handleData } from "../api";
-export default function ScrollWrapper({ children, setItems, url }) {
-  const [page, setPage] = useState(1);
+export default function ScrollWrapper({ children, setItems }) {
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView();
 
   const getItems = async () => {
     setLoading(true);
     setTimeout(() => {
-      handleData.getData(url).then((res) => {
-        console.log(res);
-        setItems((items) => [...items, ...res.data]);
-      });
+      handleData
+        .getData(
+          `/product/list?categories=BIRTHDAY,CLOTH,COSMETIC,DELIVERY,FOOD,GIFTCARD,HEALTH,LUXURY,OTHER&idx=${page}&size=10`
+        )
+        .then((res) => {
+          setItems((items) => [...items, ...res.data]);
+        });
     }, 100);
     setLoading(false);
   };
@@ -25,6 +28,7 @@ export default function ScrollWrapper({ children, setItems, url }) {
       getItems();
     }
   }, [inView, loading]);
+
   return (
     <div className={styles.container}>
       {children}

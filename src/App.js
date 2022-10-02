@@ -16,10 +16,9 @@ import EditMyProduct from "./pages/EditMyProduct";
 import KakaoLogin from "./pages/KakaoLogin";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUp from "./pages/SignUp";
-import MyMessage from "./pages/MyMessage";
-import MyMessageDetail from "./pages/MyMessageDetail";
 import MyPage from "./pages/MyPage";
 import MyReview from "./pages/MyReview";
+import MyReviewEdit from "./pages/MyReviewEdit";
 
 function App() {
   return (
@@ -54,10 +53,9 @@ function App() {
             </Route>
             <Route path="mypage">
               <Route index element={<MyPage />} />
-              <Route path="review" element={<MyReview />} />
-              <Route path="message">
-                <Route index element={<MyMessage />} />
-                <Route path="message-detail" element={<MyMessageDetail />} />
+              <Route path="review">
+                <Route index element={<MyReview />} />
+                <Route path="review-detail" element={<MyReviewEdit />} />
               </Route>
             </Route>
             <Route path="notification" element={<Notification />} />

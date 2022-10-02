@@ -27,8 +27,8 @@ export default function Header() {
     "my-product": ["tab", "bell"],
     "edit-product": ["tab", "bell", "back"],
     mypage: ["tab", "bell"],
-    message: ["tab", "bell", "back"],
     review: ["tab", "bell", "back"],
+    "review-detail": ["tab", "bell", "back"],
     notification: ["back"],
   };
 

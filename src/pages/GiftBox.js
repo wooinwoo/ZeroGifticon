@@ -1,30 +1,42 @@
-import { useEffect, useState } from "react";
-import { handleData } from "../api";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./pageStyles/GiftBox.module.css";
-function formatDate(value) {
-  const date = new Date(value);
-  return `${date.getFullYear()}. ${date.getMonth()}. ${date.getDate()}`;
-}
+import ScrollWrapper from "../components/ScrollWrapper";
+
 function GiftListItem({ item }) {
+  const className = item.use ? "used" : "";
+
   return (
     <>
-      <Link to={`/gift-box/gift-box-detail/${item.id}`}>
-        <img src={item.img} alt={item.product_id} className={styles.giftImg} />
+      <Link className={className} to={`/gift-box/gift-box-detail/${item.id}`}>
+        <img
+          src={item.imageUrl}
+          alt={item.productId}
+          className={styles.giftImg}
+        />
       </Link>
       <div className={styles.giftInfo}>
-        <h1 className={styles.itemTitle}>{item.title}</h1>
-        <p className={styles.p}>보낸사람: {item.send_member}</p>
-        <p className={styles.p}>유효기간: {formatDate(item.expired_date)}</p>
-        <p className={styles.p}>
-          사용여부: {item.use} 감사표시: {item.answer}
-        </p>
+        <h1 className={styles.itemTitle}>{item.name}</h1>
+        <p className={styles.p}>{item.description}</p>
+        <p className={styles.p}>{item.sendNickname}</p>
+
         <div className={styles.btns}>
-          <Link to="/review" state={{ item: item }}>
-            <button className={styles.reviewBtn}>리뷰 작성</button>
+          <Link to="/gift-box/gift-review" state={{ item: item }}>
+            <button disabled={item.review} className={styles.reviewBtn}>
+              리뷰 작성
+            </button>
           </Link>
-          <Link to="/thank" state={{ item: item }}>
-            <button className={styles.thankBtn}>감사 메세지 보내기</button>
+          <Link to="/gift-box/gift-message" state={{ item: item }}>
+            {item.answer && (
+              <button type="button" className={styles.button}>
+                보낸 메세지 조회
+              </button>
+            )}
+            {item.answer || (
+              <button type="button" className={styles.button}>
+                감사 메세지 보내기
+              </button>
+            )}
           </Link>
         </div>
       </div>
@@ -48,16 +60,12 @@ function GiftList({ items }) {
 }
 function GiftBox() {
   const [items, setItems] = useState([]);
-  const handleLoad = async () => {
-    const gifts = await handleData.getData("/giftbox");
-    setItems(gifts);
-  };
-  useEffect(() => {
-    handleLoad();
-  }, []);
+
   return (
     <>
-      <GiftList items={items} />
+      <ScrollWrapper setItems={setItems} url={"/giftbox?page=0&size=10"}>
+        <GiftList items={items} />
+      </ScrollWrapper>
     </>
   );
 }

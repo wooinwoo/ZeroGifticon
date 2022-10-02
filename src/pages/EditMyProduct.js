@@ -1,25 +1,55 @@
-import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./pageStyles/EditMyProduct.module.css";
 import cx from "clsx";
+import { handleData } from "../api";
+import { useForm } from "react-hook-form";
 
 function EditMyProduct() {
+  const [files, setFiles] = useState("");
+  const data = useLocation();
   const [productState, setProductState] = useState({
-    img: "",
-    title: "",
+    // img: "",
+    name: "",
     category: "없음",
     price: 0,
-    volume: 0,
-    registrationDate: "",
+    count: 0,
+    productImageIds: [],
     description: "",
   });
 
+  const uploadFileHandler = (event) => {
+    setFiles(event.target.files);
+  };
+
+  const fileSubmitHandler = () => {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append(`files`, files[i]);
+    }
+    console.log(formData);
+    handleData
+      .createData("/admin/upload", formData)
+      .then(async (response) => {
+        const imgIds = [];
+        response.data.map((e) => imgIds.push(e.productImageId));
+        setProductState({ ...productState, productImageIds: imgIds });
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error while uploading file!", error);
+      });
+  };
+
   const post_data = async () => {
     const now = new Date();
-    await axios
-      .post("http://localhost:5000/product", {
+    handleData
+      .createData("/admin/product", {
         ...productState,
+        // productImageIds: files,
         registrationDate: `${now.getFullYear()}-${
           now.getMonth() + 1
         }-${now.getDate()}`,
@@ -28,6 +58,7 @@ function EditMyProduct() {
         console.log(response); //성공
       });
   };
+
   return (
     <div className={styles.Container}>
       <div className={styles.editArea}>
@@ -37,7 +68,7 @@ function EditMyProduct() {
             className={cx(styles.input, styles.titleInput)}
             placeholder="상품명"
             onChange={(e) =>
-              setProductState({ ...productState, title: e.target.value })
+              setProductState({ ...productState, name: e.target.value })
             }
           />
         </div>
@@ -48,20 +79,31 @@ function EditMyProduct() {
               setProductState({ ...productState, category: e.target.value })
             }>
             <option value=""></option>
-            <option value="식품">식품</option>
-            <option value="음료">음료</option>
+            <option value="BIRTHDAY">BIRTHDAY</option>
+            <option value="CLOTH">CLOTH</option>
+            <option value="COSMETIC">COSMETIC</option>
+            <option value="DELIVERY">DELIVERY</option>
+            <option value="FOOD">FOOD</option>
+            <option value="GIFTCARD">GIFTCARD</option>
+            <option value="HEALTH">HEALTH</option>
+            <option value="LUXURY">LUXURY</option>
+            <option value="OTHER">OTHER</option>
           </select>
         </div>
         <div className={styles.selecArea}>
           <span className={styles.name}>사진 선택</span>
-          <input
-            type="file"
-            accept="image/*"
-            placeholder=""
-            onChange={(e) =>
-              setProductState({ ...productState, img: e.target.value })
-            }
-          />
+          <form encType="multipart/form-data">
+            <input
+              type="file"
+              accept="image/*"
+              placeholder=""
+              onChange={(e) => uploadFileHandler(e)}
+              multiple
+            />
+            <button type="button" onClick={(e) => fileSubmitHandler(e)}>
+              버튼
+            </button>
+          </form>
         </div>
         <div>
           <div className={styles.name}>가격</div>
@@ -69,7 +111,10 @@ function EditMyProduct() {
             className={cx(styles.input, styles.priceInput)}
             placeholder="가격"
             onChange={(e) =>
-              setProductState({ ...productState, price: e.target.value })
+              setProductState({
+                ...productState,
+                price: parseInt(e.target.value),
+              })
             }
           />
         </div>
@@ -79,7 +124,10 @@ function EditMyProduct() {
             className={cx(styles.input, styles.volumeInput)}
             placeholder="수량"
             onChange={(e) =>
-              setProductState({ ...productState, volume: e.target.value })
+              setProductState({
+                ...productState,
+                count: parseInt(e.target.value),
+              })
             }
           />
         </div>
@@ -93,7 +141,10 @@ function EditMyProduct() {
             }
           />
         </div>
-        <Link to={"/my-product"} className={styles.saveBtn} onClick={post_data}>
+        <Link
+          to={"/my-product"}
+          className={styles.saveBtn}
+          onClick={() => post_data()}>
           저장
         </Link>
       </div>

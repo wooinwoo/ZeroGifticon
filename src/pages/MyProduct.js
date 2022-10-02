@@ -4,9 +4,11 @@ import axios from "axios";
 import styles from "./pageStyles/MyProduct.module.css";
 import searchImg from "../images/search-icon.svg";
 
-import { getData } from "../api";
+import { handleData } from "../api";
+import { render } from "@testing-library/react";
 
 function MyProduct() {
+  const [render, setRender] = useState(true);
   const [dataList, setDataList] = useState([]);
   const [checkBox, setCheckBox] = useState([]);
   const [category, setCategory] = useState("");
@@ -17,13 +19,14 @@ function MyProduct() {
   const headerMeta = ["", "분류", "상품명", "가격", "재고", "등록일"];
 
   useEffect(() => {
-    const res = getData("http://localhost:5000/product");
+    const res = handleData.getData("/admin/myproducts?idx=0&size=500");
     res.then((val) => {
-      setInitialData(val.slice());
-      setFilteredData(val);
-      setDataList(val);
+      console.log(val.data);
+      setInitialData(val.data.slice());
+      setFilteredData(val.data);
+      setDataList(val.data);
     });
-  }, []);
+  }, [render]);
 
   useEffect(() => {
     searchFilter();
@@ -31,7 +34,9 @@ function MyProduct() {
 
   const delBtn = () => {
     if (checkBox.length > 0) {
-      checkBox.map((i) => axios.delete(`http://localhost:5000/product/${i}`));
+      checkBox.map((i) =>
+        handleData.deleteData(`/admin/product?productId=${i}`)
+      );
       setDataList(
         dataList.filter((item) => !checkBox.includes(String(item.id)))
       );
@@ -43,7 +48,7 @@ function MyProduct() {
     let filteredSearchList = dataList;
     if (searchValue) {
       filteredSearchList = dataList.filter((item) =>
-        item.title.includes(searchValue)
+        item.name.includes(searchValue)
       );
     }
     if (category) {
@@ -109,8 +114,15 @@ function MyProduct() {
                   className={styles.select}
                   onChange={(e) => setCategory(e.target.value)}>
                   <option value="">모든카테고리</option>
-                  <option value="식품">식품</option>
-                  <option value="음료">음료</option>
+                  <option value="BIRTHDAY">BIRTHDAY</option>
+                  <option value="CLOTH">CLOTH</option>
+                  <option value="COSMETIC">COSMETIC</option>
+                  <option value="DELIVERY">DELIVERY</option>
+                  <option value="FOOD">FOOD</option>
+                  <option value="GIFTCARD">GIFTCARD</option>
+                  <option value="HEALTH">HEALTH</option>
+                  <option value="LUXURY">LUXURY</option>
+                  <option value="OTHER">OTHER</option>
                 </select>
                 <input
                   className={styles.searchFilter}
@@ -143,7 +155,7 @@ function MyProduct() {
               <button className={styles.delBtn} onClick={() => delBtn()}>
                 상품삭제
               </button>
-              <Link to="/my-product/edit-product">
+              <Link to="/my-product/edit-product" state={{ 2: 1 }}>
                 <button className={styles.editBtn}>상품 등록</button>
               </Link>
             </div>
@@ -174,7 +186,7 @@ function MyProduct() {
             ) : (
               <thead>
                 <tr>
-                  <th>검색 결과 없음</th>
+                  <th className={styles.notItem}>검색 결과 없음</th>
                 </tr>
               </thead>
             )}
@@ -204,13 +216,13 @@ const TableRow = ({ data, checkBox, setCheckBox }) => {
       <td>{data.category}</td>
       <td>
         <div className={styles.nameContainer}>
-          <img src={data.img} className={styles.productImg} alt="" />
-          <span>{data.title}</span>
+          <img src={data.mainImageUrl} className={styles.productImg} alt="" />
+          <span>{data.name}</span>
         </div>
       </td>
       <td> {data.price} </td>
-      <td> {data.volume} </td>
-      <td> {data.registrationDate} </td>
+      <td> {data.inventory} </td>
+      <td> {data.createdAt.slice(0, 10)} </td>
     </tr>
   );
 };

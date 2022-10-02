@@ -1,88 +1,49 @@
-.Container{
-  width: max(50vw,320px);
-  height: 100%;
-  margin: 10px auto;
-}
-.editArea{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: max(35vw,300px);
-  height: 82vh;
-  padding: 0 10px;
-  margin: 20px auto;
-}
-.mainName{
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.titleArea{
-  display: flex;
-}
-.img{
-  width: 15vh;
-  height: 15vh;
-}
-.titleArea div{
-  padding: 10px 20px 20px;
-}
 .title{
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 2vh;
 }
-.body{
-  font-size: 18px;
-  font-weight: 700;
-  color:#696969
+.container{
+  max-width: 700px;
+  margin:2vh auto 2vh;
 }
 
-.infoArea{
+.memberArea{
+  height: 65vh;
+  overflow: scroll;
+  border: 1px solid rgb(184, 184, 184);
+  border-radius: 10px;
+  margin: 3vh 0 1vh;
+}
+.profile{
   display: flex;
-  justify-content: space-between;
-}
-.name{
-  font-size: 18px;
-  font-weight: 500;
-}
-.price{
-  font-size: 20px;
-  font-weight: 700;
-}
-.point{
-  font-size: 18px;
-  font-weight: 600;
-  color:#696969
-}
-
-.pInput{
-  width: 60%;
-  height: 5vh;
-  
-}
-.pointBtn{
-  width: 30%;
-  height: 5vh;
-  background-color: rgba(128,128,128,0.7);
-  border-radius: 5px;
-}
-
-.userName{
+  align-items: center;
   width: 100%;
-  font-size: 18px;
-  font-weight: 600;
-  color: #696969;
-  background-color:rgba(128,128,128,0.7);
-  text-align : center;
-  padding : 10px 0;
-  border-radius: 4px;
+  height: 80px;
+  background-color:rgb(247, 247, 247);
+  border-radius: 10px;
+  padding: 0 20px;
+  margin-bottom: 0.8px;
+}
+/* .profile:hover{
+  background-color:rgb(193, 199, 203);
+} */
+.profile:hover{
+  background-color:rgb(193, 199, 203);
+}
+.profile:focus{
+  background-color:#d6B534;
+  color:aliceblue;
 }
 
-.sInput{
-  height: 14vh;
-  border: 2px solid #808080;
-  border-radius: 8px;
+.img{
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  margin-right: 20px;
+}
+.nickname{
+  font-size: 20px;
 }
 
 .sendBtn{
@@ -92,4 +53,5 @@
   text-align: center;
   background-color: #d6B534;
   border-radius: 10px;
+  font-size: 20px;
 }

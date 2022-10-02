@@ -41,9 +41,6 @@ function MyPage() {
         <div className={styles.nickname}>{item.nickname}</div>
         <div className={styles.point}>포인트 {item.point}</div>
         <div className={styles.btns}>
-          <Link to={"/mypage/message"}>
-            <button className={styles.btn}>받은 메세지 확인하기</button>
-          </Link>
           <Link to={"/mypage/review"}>
             <button className={styles.btn}>작성한 리뷰 확인하기</button>
           </Link>

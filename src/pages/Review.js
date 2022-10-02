@@ -23,7 +23,7 @@ function ReviewForm({ item }) {
     handleChange(name, value);
   };
   const handleSubmit = async (e) => {
-    console.log(item.productId);
+    console.log(item);
     e.preventDefault();
     const response = await handleData.createData(
       `/user/${item.productId}/review`,

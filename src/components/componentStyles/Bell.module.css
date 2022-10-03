@@ -1,8 +1,21 @@
-.bell{
+.wrapper {
   position: absolute;
   top:0;
   right:0;
   width: 35px;
   height: 35px;
   margin: 10px 14px;
+}
+
+.bell {
+  position: relative;
+}
+
+.active {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: #ff4040;
+  border-radius: 50%;
+  left: 1px;
 }

@@ -2,6 +2,7 @@ import axios from "axios";
 import { getAccessToken } from "./token";
 
 export const BASE_URL = "https://zerogift.p-e.kr";
+export const CURRENT_URL = "https://zerogifticon.kro.kr";
 
 export const handleData = {
   getToken: async (url) => {

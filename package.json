@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "clsx": "^1.2.1",
+    "iamport": "^0.3.4",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-barcode": "^1.4.5",

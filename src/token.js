@@ -4,7 +4,8 @@ export const logOut = async () => {
   handleData.sendLogOut("/auth/logout");
   window.localStorage.clear();
   alert("로그인 후 이용 가능합니다.");
-  window.location.href = "http://localhost:3000";
+  window.location.href = "https://zerogifticon.kro.kr/";
+  // window.location.href = "http://localhost:3000/";
 };
 
 export const setAccessToken = (accessToken) => {
@@ -71,8 +72,7 @@ export async function getAccessToken() {
   }
 
   if (!refreshToken) {
-    logOut();
-    // window.location.href = "https://zerogifticon.kro.kr";
-    window.location.href = "http://localhost:3000";
+    window.location.href = "https://zerogifticon.kro.kr";
+    // window.location.href = "http://localhost:3000/";
   }
 }

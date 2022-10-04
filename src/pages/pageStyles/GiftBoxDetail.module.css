@@ -1,3 +1,7 @@
+.used {
+  pointer-events: none;
+}
+
 .detail {
   display: flex;
   flex-direction: column;

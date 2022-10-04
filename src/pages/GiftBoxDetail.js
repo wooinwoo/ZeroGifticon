@@ -1,30 +1,29 @@
-import { useEffect, useState } from "react";
 import styles from "./pageStyles/GiftBoxDetail.module.css";
-import { useParams } from "react-router-dom";
-import Barcode from "react-barcode/lib/react-barcode";
+import { useEffect, useState } from "react";
+import Barcode from "react-barcode";
+import { Link, useParams } from "react-router-dom";
 import { handleData } from "../api";
 
 function GiftBoxDetail() {
   const { giftId } = useParams();
   const [item, setItem] = useState({});
-  console.log(giftId);
+
   const handleLoad = async () => {
     const gifts = await handleData.getData(`/giftbox/${giftId}`);
-    setItem(gifts);
+    setItem(gifts.data);
   };
+
   useEffect(() => {
     handleLoad();
   }, []);
-  console.log(item);
+
   return (
     <div className={styles.detail}>
-      <img className={styles.itemImg} src={item.img} alt={item.title}></img>
-      <div className={styles.title}>{item.title}</div>
-      <Barcode value="example" className={styles.barcode}>
-        바코드
+      <img className={styles.itemImg} src={item.imageUrl} alt={item.name}></img>
+      <div className={styles.title}>{item.name}</div>
+      <Barcode value={item.barcodUrl} className={styles.barcode}>
+        {item.name}
       </Barcode>
-      <div className={styles.use}>사용기한</div>
-      <button className={styles.button}>감사 메세지 보내기</button>
     </div>
   );
 }

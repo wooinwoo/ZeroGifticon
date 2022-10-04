@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { handleData } from "../api";
 import RatingInput from "../components/RatingInput";
-import styles from "./pageStyles/Review.module.css";
+import styles from "./pageStyles/MyReviewEdit.module.css";
 
 function ReviewForm({ item }) {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    rank: 0,
-    description: "",
+    rank: item.rank,
+    description: item.description,
   });
 
   const handleChange = (name, value) => {
@@ -22,17 +22,21 @@ function ReviewForm({ item }) {
     const { name, value } = e.target;
     handleChange(name, value);
   };
+
   const handleSubmit = async (e) => {
-    console.log(item);
     e.preventDefault();
-    const response = await handleData.createData(
-      `/user/${item.productId}/review`,
+    const response = await handleData.PatchData(
+      `/user/${item.reviewId}/review`,
       values
     );
     if (response) {
-      alert("리뷰를 생성했습니다.");
-      navigate("/gift-box");
+      alert("리뷰를 수정했습니다.");
+      navigate("/mypage/review");
     }
+  };
+
+  const handleClick = () => {
+    navigate("/mypage/review");
   };
 
   return (
@@ -51,9 +55,14 @@ function ReviewForm({ item }) {
         onChange={handleInputChange}
         className={styles.content}
       />
-      <button className={styles.button} type="submit">
-        리뷰 제출하기
-      </button>
+      <div className={styles.btns}>
+        <button className={styles.button} type="submit">
+          수정하기
+        </button>
+        <button onClick={handleClick} className={styles.button} type="button">
+          돌아가기
+        </button>
+      </div>
     </form>
   );
 }
@@ -65,7 +74,11 @@ function Review() {
   return (
     <div className={styles.review}>
       <div className={styles.title}>선물은 어떠셨나요?</div>
-      <img className={styles.itemImg} src={item.imageUrl} alt={item.name} />
+      <img
+        className={styles.itemImg}
+        src={item.product.mainImageUrl}
+        alt={item.product.name}
+      />
       <ReviewForm item={item} />
     </div>
   );

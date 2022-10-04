@@ -68,6 +68,10 @@
   border-radius: 5px;
 }
 
+.pointBtn:active{
+  background-color: #d6B534;
+}
+
 .userName{
   width: 100%;
   font-size: 18px;

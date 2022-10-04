@@ -6,7 +6,7 @@
 }
 
 .img{
-  width: calc(60px + 10vw);
+  width: max(50vw , 250px);
   height: calc(100px + 2vw);
 }
 

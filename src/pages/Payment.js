@@ -7,7 +7,6 @@ import { handleData } from "../api";
 
 export default function Payment() {
   const data = useLocation().state;
-  console.log(data);
   const [productState, setProductState] = useState({
     img: data.img,
     title: data.title,
@@ -15,30 +14,33 @@ export default function Payment() {
     price: data.price,
     description: "",
   });
-  const [item, setItem] = useState([]);
+  const [point, setPoint] = useState(0);
+  const [viewPoint, setViewPoint] = useState(0);
+  const [sendUser, setSendUser] = useState([]);
   useEffect(() => {
     const res = handleData.getData("/member-search/member");
     res.then((val) => {
-      console.log(val);
-      setItem(val.data);
+      setViewPoint(val.data.point);
+      setSendUser(val.data);
     });
   }, []);
 
   const post_data = () => {
     const { IMP } = window;
-    IMP.init("imp00000000");
+    IMP.init("imp14806872");
     IMP.request_pay(
       {
         pg: "html5_inicis",
         pay_method: "card",
         merchant_uid: "merchant_" + new Date().getTime(),
         name: "주문명:결제테스트",
-        amount: 14000,
+        amount: data.price - point,
         buyer_email: "iamport@siot.do",
-        buyer_name: "구매자이름",
+        buyer_name: sendUser.nickname,
         buyer_tel: "010-1234-5678",
         buyer_addr: "서울특별시 강남구 삼성동",
         buyer_postcode: "123-456",
+        m_redirect_url: "{}",
       },
       function (rsp) {
         if (rsp.success) {
@@ -47,6 +49,7 @@ export default function Payment() {
           msg += "상점 거래ID : " + rsp.merchant_uid;
           msg += "결제 금액 : " + rsp.paid_amount;
           msg += "카드 승인번호 : " + rsp.apply_num;
+          payment(rsp);
         } else {
           var msg = "결제에 실패하였습니다.";
           msg += "에러내용 : " + rsp.error_msg;
@@ -54,23 +57,35 @@ export default function Payment() {
         alert(msg);
       }
     );
-    console.log(IMP);
+  };
+
+  const payment = (pay) => {
+    console.log(pay);
     handleData
       .createData("/pay", {
-        impUid: "아임포트 아이디값",
-        merchantUid: "상점 아이디 값",
+        impUid: pay.imp_uid,
+        merchantUid: pay.merchant_uid,
         message: productState.description,
-        pgProvider: "PG 아이디 값",
-        pgTid: "PG 거래번호",
+        pgProvider: pay.paid_at,
+        pgTid: pay.pg_tid,
         productId: data.id,
-        sendId: 0,
-        usePoint: 0,
+        sendId: data.memberId,
+        usePoint: point,
       })
       .then((res) => {
         console.log(res);
       });
   };
-  console.log(data.images[0].url);
+  const pointLock = (e) => {
+    const val = data.price > viewPoint ? viewPoint : data.price;
+    console.log(String(val), e.target.value);
+    if (val < e.target.value) {
+      setPoint(val);
+    } else {
+      setPoint(e.target.value);
+    }
+  };
+  console.log(point);
   return (
     <div className={styles.Container}>
       <div className={styles.editArea}>
@@ -89,19 +104,23 @@ export default function Payment() {
         </div>
         <div className={styles.infoArea}>
           <span className={styles.name}>포인트</span>
-          {/* <span className={styles.point}>보유 {item.point}P</span> */}
-          <span className={styles.point}>보유 1000P</span>
+          <span className={styles.point}>보유 {viewPoint}P</span>
         </div>
 
         <div className={styles.infoArea}>
           <input
             className={styles.pInput}
-            placeholder="가격"
-            onChange={(e) =>
-              setProductState({ ...productState, price: e.target.value })
-            }
+            placeholder="사용 포인트"
+            onChange={(e) => pointLock(e)}
+            value={point}
           />
-          <button className={styles.pointBtn}>전액사용</button>
+          <button
+            className={styles.pointBtn}
+            onClick={() =>
+              setPoint(data.price > viewPoint ? viewPoint : data.price)
+            }>
+            전액사용
+          </button>
         </div>
         <div className={styles.userName}>{data.nickname}</div>
         <textarea

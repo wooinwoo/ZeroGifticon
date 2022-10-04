@@ -47,7 +47,9 @@ export default function Gift() {
             className={styles.profile}
             key={d.id + d.nickname}
             id={d.nickname}
-            onClick={() => setData({ ...data, nickname: d.nickname })}>
+            onClick={() =>
+              setData({ ...data, nickname: d.nickname, memberId: d.id })
+            }>
             {d.profileImageUrl != null ? (
               <img
                 className={styles.img}

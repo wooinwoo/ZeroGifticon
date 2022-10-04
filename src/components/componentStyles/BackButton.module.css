@@ -1,6 +1,22 @@
-.backButton{
+/* .backButton{
   position: absolute;
   top: 14px;
   left: 14px;
   font-size: 30px;
+  color: #e2e2e2;
+} */
+
+.backButton{
+  position: absolute;
+  top: 60px;
+  left: 20vw;
+  color: grey;
+  padding: 0 10px;
+  font-size: 25px;
+  font-weight: normal;
 }
+
+.backButton:hover {
+  color:#00627f;
+  font-weight: 700;
+} 

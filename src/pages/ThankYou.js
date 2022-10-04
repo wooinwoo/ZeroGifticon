@@ -63,7 +63,6 @@ function ThankForm({ item }) {
 
   return (
     <>
-      <img src={form.productImage} alt="productImage" />
       <div className={styles.to}>{`to. ${sendName}`}</div>
       <form className={styles.thankForm} onSubmit={handleSubmit}>
         <textarea

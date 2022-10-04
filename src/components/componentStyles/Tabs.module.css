@@ -1,27 +1,38 @@
 .tabList {
-  position: sticky;
-  top: 8vh;
+  /* position: sticky;
+  top: 8vh; */
   display: flex;
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
   z-index:9999;
 }
 
-.tab{
+/* .tab{
   flex:1;
   display: flex;
   justify-content: center;
   align-items: center;
   height: min(5vh,50px);
   border-bottom: 1px solid #808080;
-}
+} */
 
 .btn{
-  font-size: 18px;
-  font-weight: 600;
+  color: grey;
+  padding: 0 10px;
+  font-size: 15px;
+  font-weight: normal;
+  font-family: 'Nanum Gothic Coding', monospace;
+  border-right: 1px solid grey;
 }
 
-
-.selected {
-  border-bottom: #d6B534 3px solid;
+.btn:hover {
+  color:#00627f;
   font-weight: 800;
 }
+
+.selected {
+  border-bottom: #f8cb2e 3px solid;
+  font-size: 18px;
+  font-weight: 800;
+  color:#00627f;
+}
+

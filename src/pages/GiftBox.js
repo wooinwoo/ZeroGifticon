@@ -5,16 +5,15 @@ import { handleData } from "../api";
 import { useInView } from "react-intersection-observer";
 
 function GiftListItem({ item }) {
-  const className = item.use ? "used" : "";
-
   return (
     <>
-      <Link className={className} to={`/gift-box/gift-box-detail/${item.id}`}>
+      <Link to={item.use ? "#" : `/gift-box/gift-box-detail/${item.id}`}>
         <img
           src={item.imageUrl}
           alt={item.productId}
           className={styles.giftImg}
         />
+        {item.use && <div className={styles.used}>사용완료</div>}
       </Link>
       <div className={styles.giftInfo}>
         <h1 className={styles.itemTitle}>{item.name}</h1>

@@ -9,13 +9,21 @@
 
 .bell {
   position: relative;
+  top: 50px;
+  right: 20vw;
+  font-size: 30px;
+  color: grey;
+}
+
+.bell:hover {
+  color: #f8cb2e;
 }
 
 .active {
   position: absolute;
   width: 15px;
   height: 15px;
-  background-color: #ff4040;
+  background-color: #ee5007;
   border-radius: 50%;
   left: 1px;
 }

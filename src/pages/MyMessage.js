@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { handleData } from "../api";
 import styles from "./pageStyles/MyMessage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,7 +34,7 @@ function MessageListItem({ item }) {
 
 function MessageList({ items }) {
   if (items.length === 0)
-    return <div className={styles.noItem}>작성한 리뷰가 없습니다.</div>;
+    return <div className={styles.noItem}>받은 메세지가 없습니다.</div>;
 
   return (
     <ul className={styles.items}>

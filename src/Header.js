@@ -4,7 +4,7 @@ import styles from "./Header.module.css";
 import Tabs from "./components/Tabs";
 import Bell from "./components/Bell";
 import BackButton from "./components/BackButton";
-import Personal from "./components/Personal";
+import { logOut } from "./token";
 
 export default function Header() {
   const pathname = useLocation().pathname.split("/");
@@ -34,17 +34,34 @@ export default function Header() {
     notification: ["back"],
   };
 
+  const handleLogout = async () => {
+    await logOut();
+  };
+
   return (
     <>
       {pageOption[path].length !== 0 && (
         <div className={styles.header}>
-          선물하기
+          <div className={styles.logo}>
+            <div className={styles.des}>마음을 선물해요</div>
+            <div className={styles.title}>ZeroGift</div>
+          </div>
           {pageOption[path].includes("bell") ? <Bell /> : ""}
           {pageOption[path].includes("back") ? <BackButton /> : ""}
-          <Personal />
+          <div className={styles.menu}>
+            {pageOption[path].includes("tab") ? (
+              <>
+                <Tabs />
+                <button className={styles.logoutBtn} onClick={handleLogout}>
+                  로그아웃
+                </button>
+              </>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       )}
-      {pageOption[path].includes("tab") ? <Tabs /> : ""}
       <Outlet />
     </>
   );

@@ -70,3 +70,9 @@
   object-fit: cover;
   color: grey;
 }
+
+.noItem {
+  margin-top: 300px;
+  font-size: 50px;
+  text-align: center;
+}

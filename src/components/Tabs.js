@@ -6,6 +6,7 @@ const tabList = [
   { name: "상점", pathname: "/shop" },
   { name: "선물함", pathname: "/gift-box" },
   { name: "내상품", pathname: "/my-product" },
+  { name: "마이페이지", pathname: "/mypage" },
 ];
 
 export default function Tabs({ onClick }) {
@@ -30,7 +31,8 @@ function Tab({ item, selected, onClick }) {
       <Link to={item.pathname}>
         <button
           className={cx(styles.btn, { [styles.selected]: selected })}
-          onClick={onClick}>
+          onClick={onClick}
+        >
           <span>{item.name}</span>
         </button>
       </Link>

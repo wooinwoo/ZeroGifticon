@@ -21,9 +21,10 @@ function GiftBoxDetail() {
     <div className={styles.detail}>
       <img className={styles.itemImg} src={item.imageUrl} alt={item.name}></img>
       <div className={styles.title}>{item.name}</div>
-      <Barcode value={item.barcodUrl} className={styles.barcode}>
+      {/* <Barcode value={item.barcodUrl} className={styles.barcode}>
         {item.name}
-      </Barcode>
+      </Barcode> */}
+      <img src={item.barcodUrl} alt={item.name} className={styles.barcode} />
     </div>
   );
 }

@@ -3,8 +3,8 @@ import { getAccessToken } from "../token";
 import { Link } from "react-router-dom";
 import styles from "./componentStyles/Bell.module.css";
 import { EventSourcePolyfill } from "event-source-polyfill";
-
-import bellIcon from "../images/bell_notification.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { BASE_URL, handleData, CURRENT_URL } from "../api";
 
 export default function Bell() {
@@ -72,7 +72,7 @@ export default function Bell() {
   return (
     <Link to="/notification">
       <div className={styles.wrapper}>
-        <img src={bellIcon} className={styles.bell} alt="" />
+        <FontAwesomeIcon className={styles.bell} icon={faBell} />
         <span className={notice ? styles.active : ""}></span>
       </div>
     </Link>

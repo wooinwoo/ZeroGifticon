@@ -3,7 +3,9 @@
 .mypage {
   margin-top: 80px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   font-family: 'Nanum Gothic Coding', monospace;
 }
 
@@ -22,9 +24,8 @@
 }
 
 .myInfo {
-  margin-top: 60px;
-  margin-left: 30px;
-  width: 500px;
+  margin: 30px 60px;
+  width: 400px;
   display: flex;
   flex-direction: column;
 }
@@ -40,11 +41,11 @@
 }
 
 .btns {
-  width: 500px;
+  width: 600px;
 }
 
 .btn {
-  width: 230px;
+  width: 280px;
   height: 40px;
   background-color: #e2e2e2;
   margin-top: 20px;
@@ -55,4 +56,16 @@
 .btn:hover {
   background-color: #f8cb2e ;
   font-weight: 700;
+}
+
+@media screen and (max-width: 1024px) {
+  .mypage {
+    flex-direction: column;
+  }
+  .myInfo {
+    width: 290px;
+  }
+  .btns {
+    width: 300px;
+  }
 }

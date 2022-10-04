@@ -20,6 +20,32 @@
   width: 120px;
 }
 
+.uploadBtn{
+  width: 10vw;
+  height: 2vw;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1vw;
+  background-color: #d6B534;
+}
+
+.uploadBtn:active{
+  color: #fff;
+  background-color: rgb(83, 81, 83);
+}
+.previewBox{
+  display: flex;
+  font-weight: 700;
+  align-items: center;
+  margin-top: 5px
+}
+.preview{
+  border: 3px solid black;
+  border-radius: 10px;
+  width: 8vw;
+  height: 8vw;
+}
+
 .name {
   font-size: 20px;
   font-weight: 700;
@@ -43,6 +69,8 @@ select {
   height: 50px;
   line-height: 50px;
   text-align: center;
+  font-weight: 700;
+  font-size: 20px;
   background-color: #d6B534;
   border-radius: 10px;
 }

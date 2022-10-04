@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "clsx": "^1.2.1",
+    "iamport": "^0.3.4",
     "dayjs": "^1.11.5",
     "event-source-polyfill": "^1.0.31",
     "prettier": "^2.7.1",

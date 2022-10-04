@@ -14,6 +14,30 @@ function ShopDetail({ id = null }) {
   const [like, setLike] = useState("");
   const [getComplet, setGetComplet] = useState(false);
 
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const [style, setStyle] = useState({
+    transform: `translateX(-${currentImgIndex}00%)`,
+    transition: `all 0.4s ease-in-out`,
+  });
+  const nextSlide = () => {
+    if (currentImgIndex + 1 !== data.images.length) {
+      setCurrentImgIndex(currentImgIndex + 1);
+      setStyle({
+        transform: `translateX(-${currentImgIndex + 1}00%)`,
+        transition: `all 0.4s ease-in-out`,
+      });
+    }
+  };
+  const prevSlide = () => {
+    if (currentImgIndex !== 0) {
+      setCurrentImgIndex(currentImgIndex - 1);
+      setStyle({
+        transform: `translateX(-${currentImgIndex - 1}00%)`,
+        transition: `all 0.4s ease-in-out`,
+      });
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -31,6 +55,7 @@ function ShopDetail({ id = null }) {
     res.then((val) => {
       setData(val.data);
       getLikeList();
+      console.log("c", val);
     });
   };
 
@@ -69,11 +94,11 @@ function ShopDetail({ id = null }) {
       .catch((error) => console.log(error));
   };
 
-  console.log(likeList, likeList.length);
+  console.log(data);
   return (
     <div className={styles.container}>
       <div className={styles.banner}>
-        <div className={styles.banner_images}>
+        <div className={styles.banner_images} style={style}>
           {data.images &&
             data.images.map((d) => (
               <img
@@ -84,6 +109,24 @@ function ShopDetail({ id = null }) {
               />
             ))}
         </div>
+        <button className={styles.prevBtn} onClick={prevSlide}>
+          {"<"}
+        </button>
+        <button className={styles.nextBtn} onClick={nextSlide}>
+          {">"}
+        </button>
+      </div>
+      <div className={styles.mini_images}>
+        {data.images &&
+          data.images.map((d, idx) => (
+            <span
+              key={d.productImageId}
+              className={cx(styles.mini_box, {
+                [styles.mini_imgP]: idx === currentImgIndex,
+              })}>
+              <img src={d.url} className={styles.mini_img} alt="" />
+            </span>
+          ))}
       </div>
       <div className={styles.info}>
         <span className={styles.title}>{data.title}</span>

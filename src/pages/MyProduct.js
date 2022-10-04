@@ -33,6 +33,7 @@ function MyProduct() {
   }, [dataList]);
 
   const delBtn = () => {
+    console.log(checkBox);
     if (checkBox.length > 0) {
       checkBox.map((i) =>
         handleData.deleteData(`/admin/product?productId=${i}`)
@@ -62,7 +63,7 @@ function MyProduct() {
   const onSort = (s) => {
     switch (s) {
       case "최근등록순":
-        setDataList([...initialData.slice()].reverse());
+        setDataList(initialData.slice());
         break;
       case "가격낮은순":
         setDataList(
@@ -81,19 +82,19 @@ function MyProduct() {
       case "재고낮은순":
         setDataList(
           dataList.sort(function (a, b) {
-            return a.volume - b.volume;
+            return a.inventory - b.inventory;
           })
         );
         break;
       case "재고높은순":
         setDataList(
           dataList.sort(function (a, b) {
-            return b.volume - a.volume;
+            return b.inventory - a.inventory;
           })
         );
         break;
       default:
-        setDataList(initialData.slice());
+        setDataList([...initialData.slice()].reverse());
     }
   };
 
@@ -143,8 +144,8 @@ function MyProduct() {
                   onSort(e.target.value);
                   setSort(e.target.value);
                 }}>
-                <option value="등록순">등록순</option>
                 <option value="최근등록순">최근등록순</option>
+                <option value="등록순">등록순</option>
                 <option value="가격낮은순">가격낮은순</option>
                 <option value="가격높은순">가격높은순</option>
                 <option value="재고낮은순">재고낮은순</option>
@@ -152,10 +153,10 @@ function MyProduct() {
               </select>
             </div>
             <div>
-              <button className={styles.delBtn} onClick={() => delBtn()}>
+              <button className={styles.delBtn} onClick={delBtn}>
                 상품삭제
               </button>
-              <Link to="/my-product/edit-product" state={{ 2: 1 }}>
+              <Link to="/my-product/edit-product" state={setRender}>
                 <button className={styles.editBtn}>상품 등록</button>
               </Link>
             </div>

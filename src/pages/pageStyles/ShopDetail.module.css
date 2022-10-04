@@ -6,8 +6,9 @@
 }
 
 .banner{
+  position: relative;
   width: 100%;
-  height: 15em;
+  height: min(calc(150px + 10vw),calc(230px + 1vw));
   overflow: hidden;
 }
 .banner_images{
@@ -20,6 +21,52 @@
   height: min(calc(150px + 10vw),calc(230px + 1vw));
   min-height: 180px;
 }
+
+.prevBtn{
+  display: none;
+  position: absolute;
+  top: 10vh;
+  left: 20px;
+  font-size: 40px;
+  color: darkgray;
+  background-color: transparent;
+}
+.nextBtn{
+  display: none;
+  position: absolute;
+  top: 10vh;
+  right: 20px;
+  font-size: 40px;
+  color: darkgray;
+  background-color: transparent;
+}
+.banner:hover .prevBtn,
+.banner:hover .nextBtn{
+  display: block;
+}
+
+.mini_images{
+  margin-top: 10px;
+}
+.mini_box{
+  display: inline-block;
+  width: 10vw;
+  height: 10vw;
+  border-radius: 40%;
+  
+}
+
+.mini_img{
+  width: 9.5vw;
+  height: 9.5vw;
+  margin: 0.25vw;
+  border-radius: 40%;
+}
+
+.mini_imgP{
+  background-color: #615d6e;
+}
+
 
 .info{
   display: flex;

@@ -16,14 +16,45 @@ export default function Payment() {
     description: "",
   });
   const [item, setItem] = useState([]);
-
   useEffect(() => {
-    const response = handleData.getData("/member-search/member");
-    setItem(response.data);
+    const res = handleData.getData("/member-search/member");
+    res.then((val) => {
+      console.log(val);
+      setItem(val.data);
+    });
   }, []);
 
   const post_data = () => {
-    console.log(1);
+    const { IMP } = window;
+    IMP.init("imp00000000");
+    IMP.request_pay(
+      {
+        pg: "html5_inicis",
+        pay_method: "card",
+        merchant_uid: "merchant_" + new Date().getTime(),
+        name: "주문명:결제테스트",
+        amount: 14000,
+        buyer_email: "iamport@siot.do",
+        buyer_name: "구매자이름",
+        buyer_tel: "010-1234-5678",
+        buyer_addr: "서울특별시 강남구 삼성동",
+        buyer_postcode: "123-456",
+      },
+      function (rsp) {
+        if (rsp.success) {
+          var msg = "결제가 완료되었습니다.";
+          msg += "고유ID : " + rsp.imp_uid;
+          msg += "상점 거래ID : " + rsp.merchant_uid;
+          msg += "결제 금액 : " + rsp.paid_amount;
+          msg += "카드 승인번호 : " + rsp.apply_num;
+        } else {
+          var msg = "결제에 실패하였습니다.";
+          msg += "에러내용 : " + rsp.error_msg;
+        }
+        alert(msg);
+      }
+    );
+    console.log(IMP);
     handleData
       .createData("/pay", {
         impUid: "아임포트 아이디값",
@@ -39,13 +70,13 @@ export default function Payment() {
         console.log(res);
       });
   };
-
+  console.log(data.images[0].url);
   return (
     <div className={styles.Container}>
       <div className={styles.editArea}>
         <h1 className={styles.mainName}>결제창</h1>
         <div className={styles.titleArea}>
-          <img href={data.img} alt="" className={styles.img} />
+          <img src={data.images[0].url} alt="" className={styles.img} />
           <div>
             <p className={styles.title}>{data.name}</p>
             <p className={styles.body}>{data.description}</p>
@@ -80,9 +111,9 @@ export default function Payment() {
             setProductState({ ...productState, description: e.target.value })
           }
         />
-        <Link to={"/shop"} className={styles.sendBtn} onClick={post_data}>
+        <button to={"/shop"} className={styles.sendBtn} onClick={post_data}>
           선물 보내기
-        </Link>
+        </button>
       </div>
     </div>
   );

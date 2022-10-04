@@ -43,7 +43,11 @@
 .img{
   width: 20px;
 }
-
+.price{
+  padding-top:15px;
+  font-size: min(4vw,20px);
+  font-weight: 600;
+}
 
 .searchBox{
   position: absolute;

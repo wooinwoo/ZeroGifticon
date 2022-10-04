@@ -89,6 +89,7 @@ function Shop() {
                   <img src={heartIcon} alt="heartIcon" />
                   <span>{data.likeCount}</span>
                 </div>
+                <div className={styles.price}>{data.price} 원</div>
               </ListItemLayout>
             </Link>
           ))}

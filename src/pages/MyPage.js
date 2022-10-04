@@ -44,6 +44,9 @@ function MyPage() {
           <Link to={"/mypage/review"}>
             <button className={styles.btn}>작성한 리뷰 확인하기</button>
           </Link>
+          <Link to={"/mypage/message"}>
+            <button className={styles.btn}>받은 메세지 확인하기</button>
+          </Link>
         </div>
       </div>
     </div>

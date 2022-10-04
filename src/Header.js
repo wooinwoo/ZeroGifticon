@@ -30,6 +30,7 @@ export default function Header() {
     mypage: ["tab", "bell"],
     review: ["tab", "bell", "back"],
     "review-detail": ["tab", "bell", "back"],
+    message: ["tab", "bell", "back"],
     notification: ["back"],
   };
 

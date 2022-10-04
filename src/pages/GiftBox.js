@@ -18,18 +18,28 @@ function GiftListItem({ item }) {
       </Link>
       <div className={styles.giftInfo}>
         <h1 className={styles.itemTitle}>{item.name}</h1>
-        <p className={styles.p}>{item.description}</p>
-        <p className={styles.p}>{item.sendNickname}</p>
+        <p className={styles.des}>{item.description}</p>
+        <p className={styles.sendName}>From. {item.sendNickname}</p>
 
         <div className={styles.btns}>
           <Link to="/gift-box/gift-review" state={{ item: item }}>
-            <button disabled={item.review} className={styles.reviewBtn}>
-              리뷰 작성
-            </button>
+            {item.review || (
+              <button className={styles.button}>리뷰 작성</button>
+            )}
+          </Link>
+          <Link to="/mypage/review" state={{ item: item }}>
+            {item.review && (
+              <button className={`${styles.button} ${styles.com}`}>
+                작성한 리뷰 조회
+              </button>
+            )}
           </Link>
           <Link to="/gift-box/gift-message" state={{ item: item }}>
             {item.answer && (
-              <button type="button" className={styles.button}>
+              <button
+                type="button"
+                className={`${styles.button} ${styles.com}`}
+              >
                 보낸 메세지 조회
               </button>
             )}

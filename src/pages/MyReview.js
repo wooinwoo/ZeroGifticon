@@ -24,8 +24,14 @@ function ReviewListItem({ item, onDelete }) {
   };
 
   return (
-    <>
-      <div>
+    <div className={styles.item}>
+      <img
+        className={styles.img}
+        src={item.product.mainImageUrl}
+        alt={item.product.name}
+      />
+      <div className={styles.reviewInfo}>
+        <div className={styles.title}>{item.product.name}</div>
         <div>
           {RATINGS.map((rating) => (
             <Star
@@ -36,15 +42,21 @@ function ReviewListItem({ item, onDelete }) {
             />
           ))}
         </div>
-        <div>{item.description}</div>
-        <Link to="/mypage/review/review-detail" state={{ item: item }}>
-          <button>수정</button>
-        </Link>
-        <button type="button" onClick={handleDeleteClick}>
-          삭제
-        </button>
+        <div className={styles.des}>{item.description}</div>
+        <div className={styles.btns}>
+          <Link to="/mypage/review/review-detail" state={{ item: item }}>
+            <button className={styles.button}>수정</button>
+          </Link>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={handleDeleteClick}
+          >
+            삭제
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -91,9 +103,9 @@ function MyReview() {
   }, []);
 
   return (
-    <div className={styles.page}>
+    <>
       <ReviewList items={items} onDelete={handleDelete} />
-    </div>
+    </>
   );
 }
 

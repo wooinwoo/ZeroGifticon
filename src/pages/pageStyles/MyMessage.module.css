@@ -11,29 +11,31 @@
   margin-top: 30px;
 }
 
-.giftImg {
+.img {
   width: 320px;
   height: 200px;
   margin-right: 50px;
 }
 
-.giftInfo {
-  width: 640px;
+.messageInfo {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin-top: 30px;
+  margin-left: 30px;
 }
 
-.itemTitle {
+.title {
   font-size: 25px;
   font-weight: 700;
-  padding : 20px 0;
-}
-
-.sendName {
-  margin: 20px 5px;
-  font-weight: 700;
+  padding: 20px 0;
 }
 
 .des {
-  padding: 5px 0;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  font-size: 15px;
 }
 
 .btns {
@@ -52,15 +54,19 @@
 
 .button:hover {
   background-color: #f8cb2e;
+  font-weight: 700;
 }
 
-.com:hover {
-  background-color: #006e7f;
-  color: white;
+.profile {
+  width: 200px;
+  height: 200px; 
+  border-radius: 90%;
+  overflow: hidden;
+  background-color: #e2e2e2;
 }
-
-.noItem {
-  margin-top: 300px;
-  font-size: 50px;
-  text-align: center;
+.user {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  color: grey;
 }

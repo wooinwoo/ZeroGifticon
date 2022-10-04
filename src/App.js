@@ -20,6 +20,7 @@ import Payment from "./pages/Payment";
 import MyPage from "./pages/MyPage";
 import MyReview from "./pages/MyReview";
 import MyReviewEdit from "./pages/MyReviewEdit";
+import MyMessage from "./pages/MyMessage";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
                 <Route index element={<MyReview />} />
                 <Route path="review-detail" element={<MyReviewEdit />} />
               </Route>
+              <Route path="message" element={<MyMessage />} />
             </Route>
             <Route path="notification" element={<Notification />} />
           </Route>

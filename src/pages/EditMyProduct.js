@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./pageStyles/EditMyProduct.module.css";
 import cx from "clsx";
 import { handleData } from "../api";
-import { useForm } from "react-hook-form";
 
 function EditMyProduct() {
-  const [files, setFiles] = useState("");
+  let navigate = useNavigate();
   const data = useLocation();
+  const [files, setFiles] = useState("");
+  const [imageSrc, setImageSrc] = useState("");
   const [productState, setProductState] = useState({
-    // img: "",
     name: "",
     category: "없음",
     price: 0,
@@ -18,7 +19,19 @@ function EditMyProduct() {
     description: "",
   });
 
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+
   const uploadFileHandler = (event) => {
+    encodeFileToBase64(event.target.files[0]);
     setFiles(event.target.files);
   };
 
@@ -33,6 +46,7 @@ function EditMyProduct() {
       .then(async (response) => {
         const imgIds = [];
         response.data.map((e) => imgIds.push(e.productImageId));
+        console.log(imgIds);
         setProductState({ ...productState, productImageIds: imgIds });
         if (!response.ok) {
           const error = (data && data.message) || response.status;
@@ -44,21 +58,30 @@ function EditMyProduct() {
       });
   };
 
-  const post_data = async () => {
+  const post_data = () => {
     const now = new Date();
+    console.log({
+      ...productState,
+      registrationDate: `${now.getFullYear()}-${
+        now.getMonth() + 1
+      }-${now.getDate()}`,
+    });
     handleData
       .createData("/admin/product", {
         ...productState,
-        // productImageIds: files,
         registrationDate: `${now.getFullYear()}-${
           now.getMonth() + 1
         }-${now.getDate()}`,
       })
       .then(function (response) {
         console.log(response); //성공
+        navigate("/my-product");
+      })
+      .catch(function () {
+        alert("미입력정보가 있습니다");
       });
   };
-
+  console.log(files[0]);
   return (
     <div className={styles.Container}>
       <div className={styles.editArea}>
@@ -100,9 +123,24 @@ function EditMyProduct() {
               onChange={(e) => uploadFileHandler(e)}
               multiple
             />
-            <button type="button" onClick={(e) => fileSubmitHandler(e)}>
-              버튼
+            <button
+              className={styles.uploadBtn}
+              type="button"
+              onClick={(e) => fileSubmitHandler(e)}>
+              이미지 제출
             </button>
+            <div className={styles.previewBox}>
+              MainImg :
+              {imageSrc ? (
+                <img
+                  src={imageSrc}
+                  alt="preview-img"
+                  className={styles.preview}
+                />
+              ) : (
+                <img src="" alt="preview-img" className={styles.preview} />
+              )}
+            </div>
           </form>
         </div>
         <div>
@@ -135,18 +173,15 @@ function EditMyProduct() {
           <div className={styles.name}>설명</div>
           <textarea
             className={cx(styles.input, styles.descriptionInput)}
-            placeholder="설명"
+            placeholder="상품설명"
             onChange={(e) =>
               setProductState({ ...productState, description: e.target.value })
             }
           />
         </div>
-        <Link
-          to={"/my-product"}
-          className={styles.saveBtn}
-          onClick={() => post_data()}>
+        <button className={styles.saveBtn} onClick={post_data}>
           저장
-        </Link>
+        </button>
       </div>
     </div>
   );

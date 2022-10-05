@@ -1,24 +1,31 @@
 import { useLocation, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styles from "./pageStyles/ShopDetail.module.css";
 import cx from "clsx";
 import { handleData } from "../api";
 
 import viewIcon from "../images/view.svg";
 import heartIcon from "../images/heart.svg";
-import { useEffect, useState } from "react";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ShopDetail({ id = null }) {
   const state = useLocation().state.data;
+  const RATINGS = [1, 2, 3, 4, 5];
   const [data, setData] = useState({});
   const [likeList, setLikeList] = useState({});
   const [like, setLike] = useState("");
   const [getComplet, setGetComplet] = useState(false);
+  const [review, setReview] = useState({ data: [] });
 
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [style, setStyle] = useState({
     transform: `translateX(-${currentImgIndex}00%)`,
     transition: `all 0.4s ease-in-out`,
   });
+  const defaultImg =
+    "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg";
+
   const nextSlide = () => {
     if (currentImgIndex + 1 !== data.images.length) {
       setCurrentImgIndex(currentImgIndex + 1);
@@ -40,6 +47,10 @@ function ShopDetail({ id = null }) {
 
   useEffect(() => {
     getData();
+    const res = handleData.getData(`/review/product/${state.id}`);
+    res.then((val) => {
+      setReview(val);
+    });
   }, []);
 
   useEffect(() => {
@@ -55,7 +66,6 @@ function ShopDetail({ id = null }) {
     res.then((val) => {
       setData(val.data);
       getLikeList();
-      console.log("c", val);
     });
   };
 
@@ -71,7 +81,6 @@ function ShopDetail({ id = null }) {
     let cop = false;
     if (likeList.length) {
       for (let d of likeList) {
-        console.log(d.productLikeResponse);
         if (d.productLikeResponse.id === data.id) {
           cop = true;
         }
@@ -94,7 +103,17 @@ function ShopDetail({ id = null }) {
       .catch((error) => console.log(error));
   };
 
-  console.log(data);
+  function Star({ selected = false, rating }) {
+    const className = `${selected ? "selected" : ""}`;
+    return (
+      <FontAwesomeIcon
+        className={`${styles[className]} ${styles.star}`}
+        icon={faStar}
+      />
+    );
+  }
+
+  console.log(review);
   return (
     <div className={styles.container}>
       <div className={styles.banner}>
@@ -138,6 +157,39 @@ function ShopDetail({ id = null }) {
           <span>{data.likeCount}</span>
         </div>
         <div className={styles.description}>{data.description}</div>
+      </div>
+      <div className={styles.reviewArea}>
+        <div className={styles.reviewTitle}>리뷰 {review.data.length}</div>
+        {review.data.map((d, idx) => (
+          <div className={styles.memberReview} key={idx}>
+            <div className={styles.reviewHeader}>
+              {d.member.profileImageUrl != null ? (
+                <img
+                  className={styles.memberImg}
+                  src={d.member.profileImageUrl}
+                  alt=""
+                />
+              ) : (
+                <img className={styles.memberImg} src={defaultImg} alt="" />
+              )}
+              <span className={styles.memberInfo}>
+                <div className={styles.nickName}>{d.member.nickname}</div>
+                {RATINGS.map((rating) => (
+                  <Star
+                    key={rating}
+                    className={`${styles.star}`}
+                    icon={faStar}
+                    selected={d.rank >= rating ? true : false}
+                  />
+                ))}
+              </span>
+              <div className={styles.reviewDate}>
+                {d.updateDate.slice(0, 10)}
+              </div>
+              <div className={styles.reviewDescription}>{d.description}</div>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className={styles.btnArea}>

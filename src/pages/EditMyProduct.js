@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./pageStyles/EditMyProduct.module.css";
 import cx from "clsx";
 import { handleData } from "../api";

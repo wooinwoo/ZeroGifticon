@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./pageStyles/Shop.module.css";
+import cx from "clsx";
 
 import ListItemLayout from "../components/ListItemLayout";
 import ScrollWrapper from "../components/ScrollWrapper";
@@ -23,6 +24,11 @@ import other from "../images/other.png";
 function Shop() {
   const [items, setItems] = useState([]);
   const [searchValue, setSerchValue] = useState("");
+  const [categoryBtn, setCategoryBtn] = useState("");
+  var loading = false;
+  const [page, setPage] = useState(0);
+  var categoryList =
+    "BIRTHDAY,CLOTH,COSMETIC,DELIVERY,FOOD,GIFTCARD,HEALTH,LUXURY,OTHER";
 
   const category = [
     { name: "생일", img: birthday, category: false, value: "BIRTHDAY" },
@@ -37,7 +43,6 @@ function Shop() {
   ];
 
   const searchFilter = () => {
-    console.log(searchValue);
     handleData
       .getData(`/product/search?q=${searchValue}&idx=0&size=500`)
       .then((res) => {
@@ -50,10 +55,56 @@ function Shop() {
       searchFilter();
     }
   };
+
+  const categoryFilter = (category) => {
+    categoryList =
+      "BIRTHDAY,CLOTH,COSMETIC,DELIVERY,FOOD,GIFTCARD,HEALTH,LUXURY,OTHER";
+    loading = !loading;
+    if (category === categoryBtn) {
+      setCategoryBtn("");
+    } else {
+      categoryList = category;
+      setCategoryBtn(category);
+    }
+    console.log(categoryList, page);
+    handleData
+      .getData(`/product/list?categories=${categoryList}&idx=${0}&size=10`)
+      .then((res) => {
+        setItems(res.data);
+        setPage(1);
+        loading = !loading;
+      })
+      .catch(() => {
+        console.log("실패 !");
+        alert("실패 !");
+      });
+  };
+
+  const getItems = async () => {
+    if (loading === true) {
+      return;
+    }
+    if (categoryBtn !== "") {
+      categoryList = categoryBtn;
+    }
+    setPage((page) => page + 1);
+    loading = !loading;
+    console.log(page);
+    handleData
+      .getData(`/product/list?categories=${categoryList}&idx=${page}&size=10`)
+      .then((res) => {
+        setItems((items) => [...items, ...res.data]);
+        loading = !loading;
+      });
+  };
   console.log(items);
   return (
     <div className={styles.wrap}>
-      <ScrollWrapper setItems={setItems}>
+      <ScrollWrapper
+        setItems={setItems}
+        getItems={getItems}
+        loading={loading}
+        setPage={setPage}>
         <div className={styles.categoryArea}>
           <div className={styles.searchBox}>
             <input
@@ -68,16 +119,27 @@ function Shop() {
           </div>
           <div className={styles.categoryBtnWrap}>
             {category.map((data) => (
-              <button className={styles.categoryBtn} key={data.img}>
-                <img src={data.img} alt="" className={styles.img} />
-                <div>{data.name}</div>
+              <button
+                className={styles.categoryBtn}
+                key={data.img}
+                onClick={() => categoryFilter(data.value)}>
+                <div
+                  className={cx(styles.box, {
+                    [styles.categorySelected]: data.value === categoryBtn,
+                  })}>
+                  <img src={data.img} alt="" className={styles.img} />
+                  <div>{data.name}</div>
+                </div>
               </button>
             ))}
           </div>
         </div>
         <div className={styles.productArea}>
           {items.map((data) => (
-            <Link to="/shop/shop-detail" state={{ data }}>
+            <Link
+              to="/shop/shop-detail"
+              state={{ data }}
+              className={styles.productLinkBox}>
               <ListItemLayout
                 imgSrc={data.mainImageUrl}
                 title={data.name}

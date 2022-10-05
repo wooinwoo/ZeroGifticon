@@ -6,8 +6,9 @@
 }
 
 .img{
-  width: max(50vw , 250px);
-  height: calc(100px + 2vw);
+  width: min(50vw , 300px);
+  max-width: 160px;
+  height: min(30vw, 160px);
 }
 
 .img:hover{

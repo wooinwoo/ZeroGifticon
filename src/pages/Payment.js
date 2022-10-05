@@ -1,11 +1,12 @@
 import styles from "./pageStyles/Payment.module.css";
 
 import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { handleData } from "../api";
 
 export default function Payment() {
+  let navigate = useNavigate();
   const data = useLocation().state;
   const [productState, setProductState] = useState({
     img: data.img,
@@ -26,6 +27,15 @@ export default function Payment() {
   }, []);
 
   const post_data = () => {
+    if (data.price - point === 0) {
+      const rsp = {};
+      rsp["imp_uid"] = 0;
+      rsp["merchant_uid"] = 0;
+      rsp["paid_at"] = 0;
+      rsp["pg_tid"] = 0;
+      payment(rsp);
+      return;
+    }
     const { IMP } = window;
     IMP.init("imp14806872");
     IMP.request_pay(
@@ -53,14 +63,14 @@ export default function Payment() {
         } else {
           var msg = "결제에 실패하였습니다.";
           msg += "에러내용 : " + rsp.error_msg;
+          payment(rsp);
         }
-        alert(msg);
+        // alert(msg);
       }
     );
   };
 
   const payment = (pay) => {
-    console.log(pay);
     handleData
       .createData("/pay", {
         impUid: pay.imp_uid,
@@ -74,6 +84,10 @@ export default function Payment() {
       })
       .then((res) => {
         console.log(res);
+        navigate("/shop");
+      })
+      .catch(() => {
+        alert("감사메시지를 작성해주세요.");
       });
   };
   const pointLock = (e) => {

@@ -26,8 +26,6 @@
 ## :memo: GitHub Repository
 [Backend](https://github.com/NohYeongHun/zero-gifticon)
 
-[Frontend](https://github.com/ooodddu/zeroGifticon)
-
 
 ## :office: Architecture
 
